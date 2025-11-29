@@ -3,18 +3,19 @@ import { notFound } from 'next/navigation';
 import { widgets, widgetsBySlug } from '@/lib/widgets';
 import WidgetRenderer from '@/components/widgets/WidgetRenderer';
 
-interface WidgetPageProps {
-  params: { id: string };
-}
-
 export function generateStaticParams() {
   return widgets.map((widget) => ({
     id: widget.slug,
   }));
 }
 
-export default function WidgetPage({ params }: WidgetPageProps) {
-  const widget = widgetsBySlug[params.id];
+interface WidgetPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function WidgetPage({ params }: WidgetPageProps) {
+  const { id } = await params;
+  const widget = widgetsBySlug[id];
 
   if (!widget) {
     return notFound();
