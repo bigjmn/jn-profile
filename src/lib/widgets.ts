@@ -1,11 +1,10 @@
-import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
 
 import { Preview } from '@/types';
 
 export interface WidgetDefinition extends Preview {
   blurb: string;
-  component: ComponentType;
+  load: () => Promise<{ default: ComponentType }>;
 }
 
 export const widgets: WidgetDefinition[] = [
@@ -15,7 +14,7 @@ export const widgets: WidgetDefinition[] = [
     imageSrc: '/images/placeholder-1.svg',
     blurb:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    component: dynamic(() => import('@/components/widgets/Epicycles'), { ssr: false }),
+    load: () => import('@/components/widgets/Epicycles'),
   },
   {
     title: "Wilson's Algorithm",
@@ -23,7 +22,7 @@ export const widgets: WidgetDefinition[] = [
     imageSrc: '/images/placeholder-2.svg',
     blurb:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    component: dynamic(() => import('@/components/widgets/WilsonAlgo'), { ssr: false }),
+    load: () => import('@/components/widgets/WilsonAlgo'),
   },
   {
     title: 'Stochastic Clock',
@@ -31,7 +30,7 @@ export const widgets: WidgetDefinition[] = [
     imageSrc: '/images/placeholder-3.svg',
     blurb:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    component: dynamic(() => import('@/components/widgets/StochasticClock'), { ssr: false }),
+    load: () => import('@/components/widgets/StochasticClock'),
   },
   {
     title: "Conway's Angel Problem",
@@ -39,7 +38,7 @@ export const widgets: WidgetDefinition[] = [
     imageSrc: '/images/placeholder-4.svg',
     blurb:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    component: dynamic(() => import('@/components/widgets/AngelProblem'), { ssr: false }),
+    load: () => import('@/components/widgets/AngelProblem'),
   },
 ];
 

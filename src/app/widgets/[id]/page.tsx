@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { widgets, widgetsBySlug } from '@/lib/widgets';
+import WidgetRenderer from '@/components/widgets/WidgetRenderer';
 
 interface WidgetPageProps {
   params: { id: string };
@@ -19,8 +20,6 @@ export default function WidgetPage({ params }: WidgetPageProps) {
     return notFound();
   }
 
-  const WidgetComponent = widget.component;
-
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 text-center">
       <div className="space-y-4">
@@ -30,7 +29,7 @@ export default function WidgetPage({ params }: WidgetPageProps) {
 
       <div className="mt-10 flex justify-center">
         <div className="w-full max-w-5xl rounded-2xl border border-zinc-200 bg-white p-6 shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-          <WidgetComponent />
+          <WidgetRenderer widget={widget} />
         </div>
       </div>
     </div>
