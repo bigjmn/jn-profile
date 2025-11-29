@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-import { WidgetDefinition, widgets } from '@/lib/widgets';
+import { widgets } from '@/lib/widgets';
 
 const widgetComponents = widgets.reduce<Record<string, ReturnType<typeof dynamic>>>((acc, widget) => {
   acc[widget.slug] = dynamic(widget.load, { ssr: false });
@@ -10,11 +10,15 @@ const widgetComponents = widgets.reduce<Record<string, ReturnType<typeof dynamic
 }, {});
 
 interface WidgetRendererProps {
-  widget: WidgetDefinition;
+  slug: string;
 }
 
-export function WidgetRenderer({ widget }: WidgetRendererProps) {
-  const WidgetComponent = widgetComponents[widget.slug];
+export function WidgetRenderer({ slug }: WidgetRendererProps) {
+  const WidgetComponent = widgetComponents[slug];
+
+  if (!WidgetComponent) {
+    return null;
+  }
 
   return <WidgetComponent />;
 }
