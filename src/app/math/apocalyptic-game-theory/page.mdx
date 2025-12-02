@@ -1,0 +1,76 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { ThemeImage } from '@/components/ThemeImage'
+
+const apocalypticAssets =
+  'https://raw.githubusercontent.com/bigjmn/crude-euler/main/src/app/articles/apocalyptic-game-theory'
+const kennedyStrategy = `${apocalypticAssets}/kennedy-gt.png`
+const darkKennedyStrategy = `${apocalypticAssets}/kennedy-gt-dark.png`
+const eisenhowerStrategy = `${apocalypticAssets}/eisenhower-gt.png`
+const darkEisenhowerStrategy = `${apocalypticAssets}/eisenhower-gt-dark.png`
+const doomsdayStrategy = `${apocalypticAssets}/doomsday-gt.png`
+const darkDoomsdayStrategy = `${apocalypticAssets}/doomsday-gt-dark.png`
+export const article = {
+  author: 'Jesse Nicholas',
+  date: '2025-07-24',
+  title: 'Apocalyptic Game Theory',
+  description:
+    "One of the earliest applications of game theory was to analyze nuclear brinksmanship. So come join me on the brink, the view is wild."
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+I’ve recently started reading Annie Jacobsen’s terrific new book, Nuclear War: a Scenario. It’s a hyper-realistic minute-by-minute account of how a nuclear war could break out, and what it would look like (spoilers: not great!) Now when I say reading, I actually mean listening to the audiobook as I go to sleep, which has (predictably) led to some bad dreams about nuclear war. I told my friend about this the other day, to which he responded: "and do we win?”
+
+
+This struck me as kind of an odd question. Surely no one “wins” in a nuclear war, right? Isn’t that what Matthew Broderick taught that computer in War Games? The only winning move is not to play? Maybe. But maybe not. 
+
+Let’s shift gears for a moment to another movie - one of my favorites - Dr. Strangelove, Or: How I Learned to Stop Worrying and Love the Bomb. The basic premise is that the Soviets create a “Doomsday Machine”, which is programmed to automatically destroy the entire world with nuclear weapons in the event of a nuclear strike on the Soviet Union. The Soviet ambassador is asked why they would ever build such a thing, to which he responds: “we learned that your country was working along similar lines, and we were afraid of a doomsday gap.” 
+
+The film is a dark satire, and while the concept of a “Doomsday Gap” may seem absurd - I’m guessing that Kubrick meant it to, at least - from a game theory perspective it’s not so crazy. Let’s dive in. 
+## Eisenhower Strategy
+
+We start in the late ‘50s. The US has far more nuclear weapons than the USSR, but both sides have enough to completely destroy the other if they so choose. On the plus side, Stalin is gone. 
+
+The official foreign policy of the Eisenhower administration is “massive retaliation”. We’ll take Eisenhower at his word, and say the little black book of war plans has one option: a mass strike on the Soviet Union. We’ll say the Soviets go “first”, and give them three options: do nothing, a mass strike, or a “limited strike.” Additionally, we’ll say the US always responds to “do nothing” with “do nothing”, and when this is optimal we’ll call it a “Broderick Equilibrium” - the winning move is not to play. Let’s look at the game tree. 
+<figure>
+<ThemeImage src={eisenhowerStrategy} darkSrc={darkEisenhowerStrategy} alt="" />
+<figcaption style={{justifySelf:'center'}}>Massive retaliation is sub-optimal</figcaption>
+</figure>
+
+The path of the ideal strategy (determined by basic back-tracing) follows the solid arrows. Outcomes are of the form (USSR payoff, US payoff). 
+
+As you can see, I have no idea how to evaluate the case of non-mutual destruction. I guess it's "positive" because you eliminate the existential threat, but there's nothing left for you to really "conquor." As for the surrender option, the utiity units are obviously arbitrary. But unless you're a die-hard believer that "better dead than red", you (like me) would pick colonization by the Soviets over everyone literally dying.
+
+From the other side, the question of retaliation in the case of a mass strike was indeed debated by game theorists at the RAND Coorporation in the wake of nuclear proliferation. Annie Jacobsen's cold war scenario mentions it as well. If hundreds of millions of innocent Americans are about to die, what's the point of killing hundres of millions of people halfway around the world? It won't save your own country. Or do you owe it to your doomed citizens to go full scorched-earth? This is unclear, but the risk of US massive retaliation (50%, if truly indifferent) should deter a mass strike. But not a limited strike - logically speaking, responding to a limited strike with a mass strike is sub-optimal, because then the Soviets are the ones with nothing to lose, and the fate of the US comes down to the flip of a philosophical coin.  
+
+Of course, I'm not saying that this is what *would* happen. I'm sure that Eisenhower would massively retaliate against a nuclear strike. But from a purely rational game theory perspective (in this admittedly simplified model) they could bomb one city and compel us to surrender. 
+
+## Adding Some US Flexibility 
+
+Enter Jack Kennedy, who gives us another option, the so-called “flexible response.” Basically we expand our little black book to allow answering a limited strike with a limited strike. This doesn’t lead to a terminal state, but we can safely say both sides incur a penalty. And just like that, our start state is a Broderick Equilibrium! 
+
+<figure>
+<ThemeImage src={kennedyStrategy} darkSrc={darkKennedyStrategy} alt="" />
+<figcaption style={{justifySelf:'center'}}>Flexible response makes retaliation feasible, thus is a true deterrent</figcaption>
+</figure>
+## Hello, Doomsday... 
+
+Of course in the movie, the Soviets opt for none of the three initial “moves” and go a different direction entirely,aforementioned “Doomsday Machine.” We’ll give the US a chance to respond in kind, closing the “Doomsday Gap.” 
+
+<figure>
+<ThemeImage src={doomsdayStrategy} darkSrc={darkDoomsdayStrategy} alt="" />
+<figcaption style={{justifySelf:'center'}}>Flexible response now infeasible - closing the "doomsday gap" is necessary.</figcaption>
+</figure>
+As we can see, the Doomsday Gap is quite real, and closing it is the only way to restore the Broderick Equilibrium. Since our limited strike option is no longer viable, they could otherwise hit us with limited strikes until we surrender (or close the Doomsday Gap.) 
+
+## And now for the twist... 
+
+The decision trees show that sometimes a limited strike is the "winning move" (assuming full rationality, etc.) while being the first to launch a massive strike is always wrong. And yet, it's the opposite assumption that may have saved the world. 
+
+In 1983, a Soviet lieutenant colonel named Stanislav Petrov received notification from an early-warning satelite that nuclear missiles had been launched targeting the Soviet Union. Thankfully, he correctly dismissed it as a false alarm, rather than running it up the chain of command. His rationale? The warning detected 5 missiles. Petrov assumed that any pre-emptive attack by the Americans would be a massive assault. I don't know what the lesson there is, but hopefully Mathew Broderick can figure it out. 
+

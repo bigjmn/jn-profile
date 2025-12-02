@@ -1,0 +1,110 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { ThemeImage } from '@/components/ThemeImage'
+
+import EloSimulator from "@/components/articlewidgets/EloSimulator"
+
+const comparableAssets =
+  'https://raw.githubusercontent.com/bigjmn/crude-euler/main/src/app/articles/comparing-the-incomparable'
+const chessMap = `${comparableAssets}/chessMap.png`
+const chessMapDark = `${comparableAssets}/chessMapDark.png`
+const movieMap = `${comparableAssets}/moviemap.png`
+export const article = {
+  author: 'Jesse Nicholas',
+  date: '2025-08-24',
+  title: 'Comparing the Incomparable',
+  description:
+    "Some ideas about comparing things, with a novel framework I'm calling \"Mesh Completion Convolution\" (MCC)"
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+Which is a better movie, *Snow White and the Seven Dwarves* or *The Godfather*? I really would like to know. I’ve only seen one of the two films in question, so I certainly can’t say. I know both are iconic, and are considered some of the greatest of all time. But which is better?
+
+You probably have some pushback. I’ll address your concerns; at the risk of being rude, I’ll be playing both sides of our conversation:
+
+> *You can’t compare them. The genre is so different. The respective qualities…* 
+>
+> Yeah, yeah, I know. But which is better?
+>
+> *It’s a matter of opinion.*
+>
+> Of course. Okay, fine… what’s the “general public consensus?”
+>
+> *There isn’t one*
+>
+> Let’s figure it out. 
+>
+> *Like a poll?* 
+>
+> No, that won’t work. The genre is so different, the respective qualities… 
+>
+> *That’s what I said.* 
+>
+> I don’t think so. 
+>
+> *I mean, we could look at Rotten Tomatoes.* 
+>
+> Rotten Tomatoes is great. It asks the question that people really care about when they want to see a movie: “Is this movie worth watching?” But that’s a fundamentally different question, and more importantly it still isn’t consistent enough, because they’re comparing “watching the movie” to “not watching the movie.” If we want to know which movie is better, we have to compare movies to movies. 
+>
+> *Which we can’t do.* 
+> 
+> Right. Well, wrong. Kind of. 
+> 
+> *You should really watch the Godfather.* 
+> 
+> I will, but let’s do this first. Okay, maybe I should just get to my idea. 
+> 
+> *That would be lovely.* 
+> 
+> But first, an anecdote!
+> 
+> *You’ve gotta be kidding.*
+
+## The Chess Analogy Cometh 
+
+I used to play chess tournaments all the time at the Boylston Chess Club. The strongest regular at the club was a guy called Chris Chase. He almost always won the tournament. If we look at his record, he almost certainly wins more often than the world’s strongest player, Magnus Carlsen. But is he better than Carlsen? Of course not. But how can we tell? They haven’t – to my knowledge at least – ever played against each other. But the people Carlsen beats - i.e. the top grandmasters in the world – are better than the people Chris Chase beat up on – me. 
+
+But how do we know that? Have I played people who have played Carlsen? One. Maybe two. But I’ve certainly played people who have played people who have played Carlsen. 
+
+<figure>
+<ThemeImage style={{justifySelf:'center'}} src={chessMap} darkSrc={chessMapDark} alt="" />
+<figcaption style={{justifySelf:"center"}}>A chain of ass-kickings</figcaption>
+</figure>
+
+It’s all part of the same ecosystem. And at the heart of it is the Elo rating system, which adjusts player ratings based on head-to-head matches. The amount of points gained/lost is relative to the rating difference between the players.
+
+The main vulnerability of the Elo system is that it can’t really handle “perfect scores.” If Random GM had a 100% win rate against me (as many do) then this path wouldn’t “work,” because there would be no lower bound on my strength compared to him, and Chase’s win record against me wouldn’t mean much. Of course, there are thousands, if not millions of paths from me to Carlsen, and of course tons of paths from Chase to Carlsen that don’t go through me. 
+
+Here’s a little simulator to play around with. Use the setup board to position players with different “true ratings”, which determine the win probabilities between a pair of players. When the simulation starts, all players start with the same “shown” rating - the mean of the true ratings. This isn’t strictly necessary - the relative strengths will still emerge - but having them converge to the actual values makes it easier to track the progress. Matches are picked randomly from the set of all valid pairs - a valid pair being two players one step away from each other (including diagonals.)  The “k factor” linearly scales the number of points won or lost. Lower k factor means more stability, but it will take longer to converge. For those of you with Machine Learning experience, it’s a lot like the learning rate.
+
+<EloSimulator />
+If the setup is connected (a path exists between any two nodes) the simulation should converge to the true ratings. If not, it won’t unless the disconnected components all happen to have the same mean. 
+
+## Back to the Movies 
+
+Right now, our axes have no significance. If two nodes are far apart, it just means they’re far apart. But what if we re-labeled them? 
+
+<figure>
+<ThemeImage style={{justifySelf:'center'}} src={movieMap} darkSrc={movieMap} alt="" />
+<figcaption style={{justifySelf:"center"}}>I've seen one or two of these!</figcaption>
+</figure>
+
+I’m sure you’ll object to my placements, but you get the idea. Movies that are close together are easier to rank head to head. We don't even mind that the two metrics are correlated, as long as there are no big gaps. And while we only care about Snow White and The Godfather, this network is what will let our true “quality” rating emerge. If, of course, we get enough matches. 
+
+Obviously there are more dimensions than these to consider. More dimensions means more accurately placed nodes, which means more truly viable matches (I'm not sure I could really vote on Iron Giant vs Sound of Music, for example). I’m going to save my more technical analysis for this framework - which I'm provisionally calling "Mesh Completion Convolution" - for another post, because this one has gone on long enough. That one will involve graph theory, the actual Elo formula, and probably touch on Arrow's Impossibility Theorem.    
+
+## What's next? 
+
+I considered building an web app and getting people to actually vote on movie pairs, so I could actually get an answer to the Snow White vs The Godfather question. I probably won’t do that, but I have something somewhat similar in the works. Stay tuned for that. And maybe, if there's time, I'll actually sit down and watch The Godfather. 
+
+
+ 
+
+
+
+

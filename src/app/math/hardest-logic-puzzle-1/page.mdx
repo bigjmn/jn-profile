@@ -1,0 +1,72 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Jesse Nicholas',
+  date: '2025-08-11',
+  title: 'Hardest Logic Puzzle: Part 1',
+  description:
+    "This puzzle is indeed very very hard. She is a beast, 20 hands high if she's a foot. Haven't solved it yet, but here are my first thoughts. "
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+I’ve seen this puzzle a few times in passing, but I figure it’s time to take an earnest crack at it. I’m going to give my initial thoughts here; hopefully there will be a part 2 to this post at some point, meaning I’ll have made some progress. 
+
+So here’s the puzzle. It was composed by George Boolos, and titled *The Hardest Logic Puzzle Ever*.
+
+> Three gods A, B, and C are called, in no particular order, True, False, and Random. True always speaks truly, False always speaks falsely, but whether Random speaks truly or falsely is a completely random matter. Your task is to determine the identities of A, B, and C by asking three yes–no questions; each question must be put to exactly one god. The gods understand English, but will answer all questions in their own language, in which the words for yes and no are "da" and "ja" in some order. You do not know which word means which.
+
+There are a few details missing here. I'm afraid that looking them up will lead to spoilers, but here are the assumptions I'm making:
+
+1. The gods all know each other's identities. 
+2. We're not allowed to ask a question to a god that she doesn't know the answer to. For example, asking God A “would God B say that God C answers randomly?” is not allowed, because God B might be random. We instead have to say “If I asked God B if God C answered randomly, would she definitely say yes?” 
+3. We're not allowed to ask a question to a god that might create a paradox. For example, we can't pose the question "are you about to answer in the affirmative?" This can't be answered falsely, so neither False nor Random could answer. 
+4. Questions about hypothetical unanswerable questions, like "If I asked God B (some question) would she be able to answer?" are allowed.
+
+This question is of course, a twist on the old classic: 
+
+> You are a prisoner in a room with 2 doors and 2 guards. One of the doors will guide you to freedom and behind the other is a hangman–you don't know which is which, but the guards do know. One of the guards always tells the truth and the other always lies. You don't know which one is the truth-teller or the liar either. However both guards know each other. You have to choose and open one of these doors, but you can only ask a single question to one of the guards.
+What do you ask to find the door leading to freedom?
+
+The answer (spoiler alert, but I think we've all heard it) is to ask a guard which door the other guard would say leads to freedom, and then take the other door. This god puzzle may not really be the "hardest logic puzzle ever", but it's certainly a hell of a lot harder than that. So let's dive in.
+
+I’m not overly concerned about the da and ja thing. It’s an annoying complication, but I’m guessing that the solution won’t involve us learning what they mean, even after determining the identity of each god, just like how in the classic problem we don’t actually learn which guard always tells the truth.
+
+For example, if we throw out Random, we could ask God A: *Does ja mean “yes”?* If she says “ja”, that means either yes, yes means “yes” or no, no doesn’t mean “yes”. Either way, she is True. Answering “da” would similarly reveal her to be False.
+
+The question basically just asks if “true is true”; the real questions we’ll want to ask are far more complicated, e.g. “If I asked God B if God C answered randomly, would she say yes?” But I’ll focus on finding what these questions are first before figuring out how to make them da-ja agnostic. 
+
+Random is the real killer here. 
+
+It completely undercuts our traditional approach to these “Knights and Knaves” puzzles, as they’re called. If we have *M* Knights and *N* Knaves randomly arranged in a line, we just ask A what B would say if we asked what C would say if we asked what D would say, etc. to the end of the line. That gives us an answer that we either know is true or know is false, depending on if N is odd or even. Random guy compromises any information along the line. 
+
+I think the key is going to be to get enough bits of information from each question that after our third question, we know the identity of some non-Random, and can use part of their earlier answer to identify everyone. Let’s break this down in parts. 
+
+## Non-Randy identification 
+
+A, B, and C are Truman, Lionel and Randy (I’m tired of these gods) but we don’t know which is which. We could ask each one: True is true? A “Yes” means they can’t be Lionel, and a “No” means they can’t be Truman. If we got lucky in our ordering, and got “Yes” and “Yes” as the first two answers, we abort our plan, since we know C is Lionel, and can then ask him a question like “is A Truman?” and get our full answer. If we’re unlucky, we get a “Yes” and a “No”, we’d have to stick to our plan. The odd answer out would be our non-Randy (a Truman if it was “Yes”, a Lionel if “No.”) Of course, we’re now out of questions.
+
+## Getting more bits of information 
+
+I've got a few ideas for getting more information from each question. I mean "information" in the information theory sense, as in we can measure it by how many possibilities it eliminates. 
+Before asking any questions, Our possibilities for ABC can be any permutation:
+
+ABC = \{"TLR", "TRL", "LTR", "LRT", "RLT", "RTL"}
+
+6 possibilities total - our "is true true" question in the previous example eliminates 2 permutations the first time, and then either 2 or 1 the second time. We must be able to do better.
+### Compounding questions 
+
+My idea here is to find out if some boolean operation of a number of statements is true or false. For example: “You are Truman; B is not Lionel; C is not Randy; is the number of true statements I just made even?” Definitely a nightmare to make da-ja agnostic, but we won't worry about that now. 
+
+### Configuring an invariant 
+
+We might be able to better leverage the asymmetry of the gods by imposing some arrangement or structure on them, and then asking some kind of recursive question. Something like: "Were I to arrange you three facing inward in a circle, such that A -> B -> C -> A going clockwise, would the person to your right definitely answer 'yes' to this question?"
+
+I'll play around with some of these options. We're gonna show these gods we mean business.
+
+
