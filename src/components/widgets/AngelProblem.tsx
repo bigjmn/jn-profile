@@ -1,4 +1,5 @@
 "use client"
+import clsx from "clsx";
 import React, { useState, useRef, useEffect } from "react";
 import { useTheme } from "next-themes";
 
@@ -142,6 +143,8 @@ export default function AngelDevil() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const activePointersRef = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const lastPinchDistanceRef = useRef<number | null>(null);
 
   // Responsive cell size
   useEffect(() => {
@@ -367,14 +370,42 @@ export default function AngelDevil() {
 
   // Pan/zoom handlers
   const handlePointerDown = (e: React.PointerEvent) => {
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
     if (activeTool === "pan") {
       setIsPanning(true);
       setPanStart({ x: e.clientX - viewOffset.x, y: e.clientY - viewOffset.y });
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     }
+
+    if (activePointersRef.current.size === 2) {
+      const points = Array.from(activePointersRef.current.values());
+      const distance = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+      lastPinchDistanceRef.current = distance;
+    }
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
+    if (activePointersRef.current.has(e.pointerId)) {
+      activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    if (activePointersRef.current.size === 2) {
+      const points = Array.from(activePointersRef.current.values());
+      const distance = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+
+      if (lastPinchDistanceRef.current) {
+        const scaleFactor = distance / lastPinchDistanceRef.current;
+        setZoom(prev => {
+          const nextZoom = prev * scaleFactor;
+          return Math.max(MIN_ZOOM, Math.min(gridSize, nextZoom));
+        });
+      }
+
+      lastPinchDistanceRef.current = distance;
+      return;
+    }
+
     if (isPanning && activeTool === "pan") {
       setViewOffset({
         x: e.clientX - panStart.x,
@@ -383,10 +414,15 @@ export default function AngelDevil() {
     }
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e: React.PointerEvent) => {
     setIsPanning(false);
     setIsHighlighting(false);
     setHighlightMode(null);
+
+    activePointersRef.current.delete(e.pointerId);
+    if (activePointersRef.current.size < 2) {
+      lastPinchDistanceRef.current = null;
+    }
   };
 
   // Render grid
@@ -449,26 +485,16 @@ export default function AngelDevil() {
                 </text>
               )}
               {isAngel && (
-                <circle
-                  cx={x + cellSize / 2}
-                  cy={y + cellSize / 2}
-                  r={cellSize * 0.4}
-                  fill={darkMode ? "#fbbf24" : "#f59e0b"}
-                  stroke={darkMode ? "#fcd34d" : "#d97706"}
-                  strokeWidth={2}
-                />
-              )}
-              {isAngel && (
-                <text
-                  x={x + cellSize / 2}
-                  y={y + cellSize / 2}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize={cellSize * 0.5}
+                <image
+                  href={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  x={x + cellSize * 0.1}
+                  y={y + cellSize * 0.1}
+                  width={cellSize * 0.8}
+                  height={cellSize * 0.8}
                   pointerEvents="none"
-                >
-                  =
-                </text>
+                  aria-label="Angel"
+                  preserveAspectRatio="xMidYMid meet"
+                />
               )}
             </g>
           );
@@ -525,22 +551,16 @@ export default function AngelDevil() {
                 </text>
               )}
               {isAngel && (
-                <circle
-                  r={hexSize * 0.5}
-                  fill={darkMode ? "#fbbf24" : "#f59e0b"}
-                  stroke={darkMode ? "#fcd34d" : "#d97706"}
-                  strokeWidth={2}
-                />
-              )}
-              {isAngel && (
-                <text
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize={hexSize * 0.6}
+                <image
+                  href={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  x={-hexSize * 0.5}
+                  y={-hexSize * 0.5}
+                  width={hexSize}
+                  height={hexSize}
                   pointerEvents="none"
-                >
-                  =
-                </text>
+                  aria-label="Angel"
+                  preserveAspectRatio="xMidYMid meet"
+                />
               )}
             </g>
           );
@@ -844,39 +864,59 @@ export default function AngelDevil() {
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Valid Move</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className={`w-5 h-5 rounded ${darkMode ? "bg-yellow-700" : "bg-orange-500"} flex items-center justify-center text-xs`}>
-                  😇
-                </div>
+                <img
+                  src={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  alt="Angel"
+                  className="w-5 h-5"
+                />
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Angel</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-start">
-          <div className={`w-full mb-4 ${panelClass}`}>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className={`${labelClass} font-semibold`}>Tools:</span>
-              <button
-                type="button"
-                onClick={() => setActiveTool("select")}
-                className={activeTool === "select" ? activeButtonClass : buttonClass}
-              >
-                Select
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTool("pan")}
-                className={activeTool === "pan" ? activeButtonClass : buttonClass}
-              >
-                Pan/Zoom
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTool("highlight")}
-                className={activeTool === "highlight" ? activeButtonClass : buttonClass}
-              >
-                Highlight
+          <div className="flex-1 flex flex-col items-center justify-start">
+            <div className={`w-full mb-4 ${panelClass}`}>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className={`${labelClass} font-semibold`}>Tools:</span>
+                <button
+                  type="button"
+                  onClick={() => setActiveTool("select")}
+                  className={clsx(
+                    "px-4 py-2 rounded font-medium transition-colors",
+                    activeTool === "select" && darkMode && "bg-blue-600 text-white hover:bg-blue-500",
+                    activeTool === "select" && !darkMode && "bg-blue-500 text-white hover:bg-blue-600",
+                    activeTool !== "select" && darkMode && "bg-gray-700 text-gray-100 hover:bg-gray-600",
+                    activeTool !== "select" && !darkMode && "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                  )}
+                >
+                  Select
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTool("pan")}
+                  className={clsx(
+                    "px-4 py-2 rounded font-medium transition-colors",
+                    activeTool === "pan" && darkMode && "bg-blue-600 text-white hover:bg-blue-500",
+                    activeTool === "pan" && !darkMode && "bg-blue-500 text-white hover:bg-blue-600",
+                    activeTool !== "pan" && darkMode && "bg-gray-700 text-gray-100 hover:bg-gray-600",
+                    activeTool !== "pan" && !darkMode && "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                  )}
+                >
+                  Pan/Zoom
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTool("highlight")}
+                  className={clsx(
+                    "px-4 py-2 rounded font-medium transition-colors",
+                    activeTool === "highlight" && darkMode && "bg-blue-600 text-white hover:bg-blue-500",
+                    activeTool === "highlight" && !darkMode && "bg-blue-500 text-white hover:bg-blue-600",
+                    activeTool !== "highlight" && darkMode && "bg-gray-700 text-gray-100 hover:bg-gray-600",
+                    activeTool !== "highlight" && !darkMode && "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                  )}
+                >
+                  Highlight
               </button>
               <label className={`${labelClass} flex items-center gap-2 cursor-pointer ml-auto`}>
                 <input
@@ -898,9 +938,9 @@ export default function AngelDevil() {
               maxWidth: `${svgSize}px`,
               aspectRatio:"1/1",
             //   height: `${svgSize}px`,
-              touchAction: activeTool === "pan" ? "none" : "auto",
+              touchAction: "none",
               userSelect: "none",
-              
+
             }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
@@ -976,9 +1016,11 @@ export default function AngelDevil() {
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Valid</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className={`w-4 h-4 rounded ${darkMode ? "bg-yellow-700" : "bg-orange-500"} flex items-center justify-center`} style={{ fontSize: "10px" }}>
-                  😇
-                </div>
+                <img
+                  src={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  alt="Angel"
+                  className="w-4 h-4"
+                />
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Angel</span>
               </div>
             </div>
