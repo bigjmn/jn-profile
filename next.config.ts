@@ -1,15 +1,20 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
-import rehypeKatex from "rehype-katex";
-import rehypePrism from "@mapbox/rehype-prism";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm, remarkMath],
-    rehypePlugins: [rehypePrism, rehypeKatex],
+    remarkPlugins: [
+      require.resolve("remark-gfm"),
+      require.resolve("remark-math"),
+    ],
+    rehypePlugins: [
+      require.resolve("@mapbox/rehype-prism"),
+      require.resolve("rehype-katex"),
+    ],
   },
 });
 
