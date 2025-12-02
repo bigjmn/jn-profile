@@ -1,0 +1,82 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { ThemeImage } from '@/components/ThemeImage'
+
+const puzzleAssets =
+  'https://raw.githubusercontent.com/bigjmn/crude-euler/main/src/app/articles/hardest-logic-puzzle-2'
+const xkcdComic = `${puzzleAssets}/xkcd-labrynth-puzzle.png`
+const hardPuzzleTree = `${puzzleAssets}/hard-puzzle-tree.png`
+const hardPuzzleTreeDark = `${puzzleAssets}/hard-puzzle-tree-dark.png`
+export const article = {
+  author: 'Jesse Nicholas',
+  date: '2025-08-21',
+  title: 'Hardest Logic Puzzle: Part 2',
+  description:
+    "SPOILER ALERT: solution in here! Managed to crack this bad boy, so if you're still working on it give this one a miss for now."
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+We got ‘em! 
+
+This is a follow up to my [previous post](../articles/hardest-logic-puzzle-1) about the Hardest Logic Puzzle in the World. Definitely check that one out if you haven’t already - it has the full puzzle and my initial thoughts on how to tackle it. And indeed, I’ve found a solution! Some of the questions could be simplified a bit (more on that later) but it works, and thus you should consider this an official **SPOILER ALERT**. If you want to chew over the problem a bit more, stop reading here. 
+
+<figure>
+<ThemeImage style={{justifySelf:'center'}} src={xkcdComic} darkSrc={xkcdComic} alt="" />
+<figcaption style={{justifySelf:"center"}}>Courtesy of xkcd</figcaption>
+</figure>
+
+So our prediction that the da and ja stuff was mostly window dressing proved largely correct. Because of that, we’ll be dealing with our old guard pals, Truman, Lionel and Randy for the most part, and when we arrive at the right question we’ll make it da-ja agnostic. 
+
+## Question 1 
+We start out with nothing, so our potential arrangements for ABC are: \{TLR, TRL, LTR, LRT, RTL, RLT}
+
+This question is the hardest one to find. We want to identify a non-Randy; we can actually do that with this first question. The key is to actually use the old “what would the other man say” trick from the classic puzzle. Assume our first question is posed to A. We want to eliminate either B or C as a potential Randy position. We need to make sure the “other man” in our question isn’t Randy, so we can’t simply ask what B (or C) would say. So how do we make sure A isn’t referring us to a Randy answer? Well, by asking nicely of course:
+
+“If I asked (any of) your fellow guards here *who isn’t Randy* if C was Randy, would he say yes?”
+
+Two options here. Either… 
+1. We’re not talking to Randy - in this case we’re in the classic two guards problem, and can simply invert what he tells us to eliminate either B or C he tells us can simply be  talking to Randy (whence the need for the “any of” condition) 
+2. We are talking to Randy - his info isn’t worth a damn, but we’re still safe inverting it and eliminating B or C. They couldn’t be Randy, Randy is A - we just talked to him.
+
+As for making it da-ja agnostic, the trick to remember is that two “jas” make a yes, and a “da” an “ja” make a no, regardless of which means which. Putting this all together, our first question to God A is:
+
+*If I were to ask (any of) your non-Random fellow gods if C is Random, would she say “Ja”?*
+
+## Question 2 
+Let’s assume the answer to the first question was “ja.” It’s the same situation if she says “da”, we’d just eliminate Randoms from position C instead of B. You’ll find the full question/answer tree below. Our remaining arrangements for ABC are now \{TLR, LTR, RTL, RLT}. 
+B isn’t Randy, so we pounce: we can identify him exactly with one question. Any yes/no question we know the answer to will tell us if he’s Truman or Lionel. “Is the sky blue?” “Was David Tennant the best Doctor in Doctor Who?” For the purists, we’ll go with “Is true true?”
+The gods are a little less flexible, so it’s back to the ol' da-ja double negative trick. 
+
+*Does “ja” mean “yes?”*
+
+## Question 3
+Suppose we get another “ja.” This means either “Yes, yes is yes” or “No, no is not yes.” Either way, that’s the truth. Our remaining arrangements for ABC are now \{LTR, RTL}. 
+
+And just like that, we’re home free. We know exactly who B is, and since they answer deterministically we can just ask (in the guard case at least) “is A Randy?” Then we either flip his answer or not, depending on if we worked out that we’re talking to Lionel or Truman. 
+Back to the gods case, where we’re saying we got a “ja” response to Q2, and so know B is True. Plenty of questions work here. I, of course, found the most confusing and convoluted one. We could just reuse our first question, but ask B this time. I really should have found that. Instead, I opted for this chestnut:
+
+*Ja means yes; A is a liar: is the number of true statements I just made even?*
+
+Woof. Still, it does work, so… mission accomplished? Here’s the full question/answer tree:
+
+<figure>
+<ThemeImage src={hardPuzzleTree} darkSrc={hardPuzzleTreeDark} alt="" />
+<figcaption style={{justifySelf:'center'}}>Colored borders indicate overlapping solutions</figcaption>
+</figure>
+We can, in fact, clean up questions 1 and 3 a little more so that we don’t even need to ask about a fellow non-random god. We just ask “If I were to ask you if (whoever) was random, would you say ja?”
+
+It’s worth noting that George Boolos, who composed the problem, had an even less elegant solution than mine. His first question: 
+
+*Does JA mean yes if and only if you are True, if and only if B is Random?*
+
+Oh George… 
+
+To wrap up, a joke based on a true story:
+
+A linguistics professor was lecturing his class one day. "In English," he said, "a double negative forms a positive. In some languages, though, such as Russian, a double negative is still a negative. However, there is no language wherein a double positive can form a negative."
+A student in the back of the room shouted out "yeah, right."
