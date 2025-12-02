@@ -22,7 +22,9 @@ export const metadata = {
   description: article.description,
 }
 
-export default (props) => <ArticleLayout article={article} {...props} />
+export default function Page(props) {
+  return <ArticleLayout article={article} {...props} />
+}
 
 I’ve recently started reading Annie Jacobsen’s terrific new book, Nuclear War: a Scenario. It’s a hyper-realistic minute-by-minute account of how a nuclear war could break out, and what it would look like (spoilers: not great!) Now when I say reading, I actually mean listening to the audiobook as I go to sleep, which has (predictably) led to some bad dreams about nuclear war. I told my friend about this the other day, to which he responded: "and do we win?”
 

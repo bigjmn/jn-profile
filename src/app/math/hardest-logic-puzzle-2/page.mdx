@@ -19,7 +19,9 @@ export const metadata = {
   description: article.description,
 }
 
-export default (props) => <ArticleLayout article={article} {...props} />
+export default function Page(props) {
+  return <ArticleLayout article={article} {...props} />
+}
 
 We got ‘em! 
 

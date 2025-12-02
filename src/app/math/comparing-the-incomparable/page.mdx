@@ -21,7 +21,9 @@ export const metadata = {
   description: article.description,
 }
 
-export default (props) => <ArticleLayout article={article} {...props} />
+export default function Page(props) {
+  return <ArticleLayout article={article} {...props} />
+}
 
 Which is a better movie, *Snow White and the Seven Dwarves* or *The Godfather*? I really would like to know. I’ve only seen one of the two films in question, so I certainly can’t say. I know both are iconic, and are considered some of the greatest of all time. But which is better?
 
