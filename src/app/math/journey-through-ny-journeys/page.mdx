@@ -26,7 +26,9 @@ export const metadata = {
   description: article.description,
 }
 
-export default (props) => <ArticleLayout article={article} {...props} />
+export default function Page(props) {
+  return <ArticleLayout article={article} {...props} />
+}
 
 My brother once pointed out something to me about New York City: any two points in the city are either 20 minutes or 45 minutes apart. This may seem impossible, but if you ask any New Yorker they’ll confirm. 
 
