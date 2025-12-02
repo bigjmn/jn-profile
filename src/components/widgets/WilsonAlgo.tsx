@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Maze, wilsonsAlgorithm } from "@/lib/widgets/wilson"
 
-export function WilsonMaze(){
+export default function WilsonMaze(){
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [stepTime, setStepTime] = useState(100)
 
