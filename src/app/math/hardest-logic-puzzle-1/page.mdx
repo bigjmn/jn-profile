@@ -13,7 +13,9 @@ export const metadata = {
   description: article.description,
 }
 
-export default (props) => <ArticleLayout article={article} {...props} />
+export default function Page(props) {
+  return <ArticleLayout article={article} {...props} />
+}
 
 I’ve seen this puzzle a few times in passing, but I figure it’s time to take an earnest crack at it. I’m going to give my initial thoughts here; hopefully there will be a part 2 to this post at some point, meaning I’ll have made some progress. 
 
