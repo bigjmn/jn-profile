@@ -1,38 +1,5 @@
 import { PreviewCard } from '@/components/preview-card';
-import { Preview } from '@/types';
-
-const projects: Preview[] = [
-  {
-    title: 'Sample Project 1',
-    slug: 'sample-project-1',
-    imageSrc: '/images/placeholder-1.svg',
-  },
-  {
-    title: 'Sample Project 2',
-    slug: 'sample-project-2',
-    imageSrc: '/images/placeholder-2.svg',
-  },
-  {
-    title: 'Sample Project 3',
-    slug: 'sample-project-3',
-    imageSrc: '/images/placeholder-3.svg',
-  },
-  {
-    title: 'Sample Project 4',
-    slug: 'sample-project-4',
-    imageSrc: '/images/placeholder-4.svg',
-  },
-  {
-    title: 'Sample Project 5',
-    slug: 'sample-project-5',
-    imageSrc: '/images/placeholder-5.svg',
-  },
-  {
-    title: 'Sample Project 6',
-    slug: 'sample-project-6',
-    imageSrc: '/images/placeholder-6.svg',
-  },
-];
+import { projects } from '@/lib/projects';
 
 export default function ProjectsPage() {
   return (
