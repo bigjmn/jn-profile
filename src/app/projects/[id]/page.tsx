@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
 
-import ProjectRenderer from '@/components/projects/ProjectRenderer';
-import { projects, projectsBySlug } from '@/lib/projects';
+import ProjectRenderer from "@/components/projects/ProjectRenderer";
+import { projects, projectsBySlug } from "@/lib/projects";
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -10,11 +10,11 @@ export function generateStaticParams() {
 }
 
 interface ProjectPageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { id } = await params;
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const { id } = params;
   const project = projectsBySlug[id];
 
   if (!project) {

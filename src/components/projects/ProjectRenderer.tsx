@@ -1,20 +1,12 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-import { projects } from "@/lib/projects";
-
-const projectComponents = projects.reduce<Record<string, ReturnType<typeof dynamic>>>((acc, project) => {
-  acc[project.slug] = dynamic(project.load, { ssr: false });
-  return acc;
-}, {});
+import { projectsBySlug } from "@/lib/projects";
 
 interface ProjectRendererProps {
   slug: string;
 }
 
 export function ProjectRenderer({ slug }: ProjectRendererProps) {
-  const ProjectComponent = projectComponents[slug];
+  const project = projectsBySlug[slug];
+  const ProjectComponent = project?.component;
 
   if (!ProjectComponent) {
     return null;
