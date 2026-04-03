@@ -486,7 +486,7 @@ export default function AngelDevil() {
               )}
               {isAngel && (
                 <image
-                  href={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  href={darkMode ? "/images/angel-svgs/angel-dark.svg" : "/images/angel-svgs/angel-light.svg"}
                   x={x + cellSize * 0.1}
                   y={y + cellSize * 0.1}
                   width={cellSize * 0.8}
@@ -552,7 +552,7 @@ export default function AngelDevil() {
               )}
               {isAngel && (
                 <image
-                  href={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  href={darkMode ? "/images/angel-svgs/angel-dark.svg" : "/images/angel-svgs/angel-light.svg"}
                   x={-hexSize * 0.5}
                   y={-hexSize * 0.5}
                   width={hexSize}
@@ -865,7 +865,7 @@ export default function AngelDevil() {
               </div>
               <div className="flex items-center gap-2">
                 <img
-                  src={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  src={darkMode ? "/images/angel-svgs/angel-dark.svg" : "/images/angel-svgs/angel-light.svg"}
                   alt="Angel"
                   className="w-5 h-5"
                 />
@@ -1017,7 +1017,7 @@ export default function AngelDevil() {
               </div>
               <div className="flex items-center gap-1">
                 <img
-                  src={darkMode ? "/images/angel-dark.svg" : "/images/angel-light.svg"}
+                  src={darkMode ? "/images/angel-svgs/angel-dark.svg" : "/images/angel-svgs/angel-light.svg"}
                   alt="Angel"
                   className="w-4 h-4"
                 />

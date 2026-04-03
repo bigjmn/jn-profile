@@ -1,221 +1,298 @@
-//@ts-nocheck
 "use client"
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 /**
- * WrappedGaussianDial
- * Visualizes the wrapped Gaussian density on a circular dial (period L),
- * at a single time t. A slider lets you adjust t.
+ * AnalogClockSSE
+ * React component that consumes a Server‑Sent Events stream where each message is a
+ * JSON string with fields: { hour: number, minute: number, second: number }.
+ * It draws the corresponding time as an analog clock on a <canvas>.
  *
- * Angle θ corresponds to clock position in [0, L) seconds.
- * Radius encodes the density at that θ (scaled to fit the SVG nicely).
+ * - Default canvas CSS size is 400×400 but it will resize to fit the parent by default
+ * - Hi‑DPI aware (uses devicePixelRatio for crisp lines)
+ * - Minimal dependencies, pure Canvas 2D
  *
- * Defaults correspond to the drift/diffusion from your ±1 / +3 example:
- *   μ = 1, σ = 2, L = 60.
+ * Example:
+ *   <AnalogClockSSE url={process.env.NEXT_PUBLIC_STREAM_URL!} />
  */
-export default function WrappedGaussianDial({
-  L = 60,
-  mu = 1,
-  sigma = 2,
-  width = 520,
-  height = 560,
-  nTheta = 720,
-  stdCoverage = 5,
-  baseRadius = 150,
-  ringThickness = 28
-}: {
-  L?: number;
-  mu?: number;
-  sigma?: number;
-  width?: number;
-  height?: number;
-  nTheta?: number;
-  stdCoverage?: number;
-  baseRadius?: number;
-  ringThickness?: number;
-}) {
-  const [t, setT] = useState(5);
+export type AnalogClockSSEProps = {
+  /** SSE endpoint URL (e.g., https://<cloud-run-service>/stream) */
+  url: string;
+  /** Pass through to EventSource for cookie‑based auth */
+  withCredentials?: boolean;
+  /** If true (default), canvas scales to the parent element size while keeping aspect ratio */
+  responsive?: boolean;
+  /** Fallback CSS size when responsive, or fixed CSS size when responsive=false */
+  width?: number; // CSS pixels
+  height?: number; // CSS pixels
+  /** Draw face numerals 1..12 (default true) */
+  showNumbers?: boolean;
+  /** Extra class for outer wrapper */
+  className?: string;
+};
 
-  const cx = width / 2;
-  const cy = (height - 60) / 2 + 10; // room for legend/controls under SVG
+export function AnalogClockSSE({
+  url,
+  withCredentials = false,
+  responsive = true,
+  width = 400,
+  height = 400,
+  showNumbers = true,
+  className = "",
+}: AnalogClockSSEProps) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const { densities, maxDensity, minDensity, meanDensity } = useMemo(() => {
-    const twoPi = Math.PI * 2;
-    const theta = new Float64Array(nTheta);
-    const thetaSec = new Float64Array(nTheta);
-    for (let i = 0; i < nTheta; i++) {
-      theta[i] = (i / nTheta) * twoPi;                 // 0..2π (clock seconds)
-      thetaSec[i] = (theta[i] / twoPi) * L;           // map to seconds on dial
-    }
-    const dens = wrappedGaussianDensity(thetaSec, t, mu, sigma, L, stdCoverage);
-    let maxD = 0, minD = Number.POSITIVE_INFINITY, sumD = 0;
-    for (let i = 0; i < nTheta; i++) {
-      const d = dens[i];
-      if (d > maxD) maxD = d;
-      if (d < minD) minD = d;
-      sumD += d;
-    }
-    return { densities: dens, maxDensity: maxD, minDensity: minD, meanDensity: sumD / nTheta };
-  }, [L, mu, sigma, t, nTheta, stdCoverage]);
+  const [status, setStatus] = useState<"idle" | "connecting" | "open" | "error" | "paused">("idle");
+  const [time, setTime] = useState<{ hour: number; minute: number; second: number } | null>(null);
 
-  // Color mapping: normalize by max density for a vivid heat map
-  const colorFor = (d: number) => hslHeat(d / Math.max(1e-12, maxDensity));
+  const cssSize = useMemo(() => ({ w: width, h: height }), [width, height]);
 
-  // Build ring segments as tiny quads between angles [i, i+1]
-  const segments: { path: string; color: string }[] = [];
-  const rOuter = baseRadius + ringThickness / 2;
-  const rInner = baseRadius - ringThickness / 2;
+  // Maintain an EventSource connection
+  useEffect(() => {
+    if (!url) return;
 
-  for (let i = 0; i < nTheta; i++) {
-    const th0 = (i / nTheta) * 2 * Math.PI;
-    const th1 = ((i + 1) / nTheta) * 2 * Math.PI;
-    // Geometry angle: 0 at top and increasing CLOCKWISE
-    const phi0 = Math.PI / 2 - th0;
-    const phi1 = Math.PI / 2 - th1;
+    
 
-    const [x0o, y0o] = polarToXY(cx, cy, rOuter, phi0);
-    const [x1o, y1o] = polarToXY(cx, cy, rOuter, phi1);
-    const [x1i, y1i] = polarToXY(cx, cy, rInner, phi1);
-    const [x0i, y0i] = polarToXY(cx, cy, rInner, phi0);
+    setStatus("connecting");
+    const es = new EventSource(url, { withCredentials });
 
-    const d = `M ${x0o} ${y0o} L ${x1o} ${y1o} L ${x1i} ${y1i} L ${x0i} ${y0i} Z`;
-    segments.push({ path: d, color: colorFor(densities[i]) });
-  }
+    es.onopen = () => setStatus("open");
+    es.onerror = () => setStatus("error");
 
-  // Tick marks every 5 seconds, labels every 10
-  const tickEvery = 5;
-  const ticks: { x1: number; y1: number; x2: number; y2: number; label?: string; lx?: number; ly?: number }[] = [];
-  for (let s = 0; s < L; s += tickEvery) {
-    const th = (2 * Math.PI) * (s / L);
-    const phi = Math.PI / 2 - th; // top and clockwise
-    const inner = baseRadius - ringThickness / 2 - 10;
-    const outer = baseRadius - ringThickness / 2 - 2;
-    const [x1, y1] = polarToXY(cx, cy, inner, phi);
-    const [x2, y2] = polarToXY(cx, cy, outer, phi);
-    const item: any = { x1, y1, x2, y2 };
-    if (s % 10 === 0) {
-      const [lx, ly] = polarToXY(cx, cy, inner - 12, phi);
-      item.label = `${s}s`;
-      item.lx = lx; item.ly = ly;
-    }
-    ticks.push(item);
-  }
+    es.onmessage = (evt) => {
+      try {
+        console.log(evt.data)
+        const obj = JSON.parse(evt.data);
+        // Accept numbers or numeric strings
+        const h = (Number(obj.hour)-4)%12;
+        const m = Number(obj.minute);
+        const s = Number(obj.second);
+        if ([h, m, s].every((n) => Number.isFinite(n))) {
+          setTime({ hour: h, minute: m, second: s });
+        }
+      } catch {
+        // ignore malformed payloads
+      }
+    };
+
+    return () => es.close();
+  }, [url, withCredentials]);
+
+  // ResizeObserver to keep canvas crisp on Hi‑DPI and when parent resizes
+  useLayoutEffect(() => {
+    const canvas = canvasRef.current;
+    const wrapper = wrapperRef.current;
+    if (!canvas || !wrapper) return;
+
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+    const setBackingStoreSize = () => {
+      const cssW = responsive ? wrapper.clientWidth : cssSize.w;
+      const cssH = responsive ? wrapper.clientHeight : cssSize.h;
+
+      // Avoid zero sizes (e.g., hidden tabs)
+      const W = Math.max(10, Math.floor(cssW));
+      const H = Math.max(10, Math.floor(cssH));
+
+      // Set the canvas internal resolution; CSS size is controlled by style
+      canvas.width = Math.floor(W * dpr);
+      canvas.height = Math.floor(H * dpr);
+      canvas.style.width = `${W}px`;
+      canvas.style.height = `${H}px`;
+
+      const ctx = canvas.getContext("2d");
+      if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // scale all draws by DPR
+
+      // Redraw with latest time
+      drawClock(canvas, time ?? { hour: 0, minute: 0, second: 0 }, showNumbers);
+    };
+
+    const ro = new ResizeObserver(setBackingStoreSize);
+    ro.observe(wrapper);
+
+    // Initial sizing
+    setBackingStoreSize();
+
+    return () => ro.disconnect();
+  }, [responsive, cssSize.w, cssSize.h, showNumbers, time]);
+
+  // Redraw when time changes
+  useEffect(() => {
+    console.log(time)
+    const canvas = canvasRef.current;
+    if (!canvas || !time) return;
+    drawClock(canvas, time ?? { hour: 0, minute: 0, second: 0 }, showNumbers);
+  }, [time, showNumbers]);
 
   return (
-    <div className="w-full max-w-[820px] mx-auto p-4">
-      <div className="flex items-end justify-between gap-4 mb-2">
-        <div>
-          <h2 className="text-xl font-semibold">Wrapped Gaussian Clock Heat Ring</h2>
-          <p className="text-sm text-gray-600">μ = {mu}, σ = {sigma}, L = {L}s · 0 at 12 o'clock · clockwise seconds</p>
-        </div>
-        <div className="text-sm text-gray-600">
-          <div>t = <span className="font-medium">{t.toFixed(1)}</span> s</div>
-          <div className="opacity-80">max ρ ≈ {maxDensity.toFixed(3)} · mean ρ ≈ {meanDensity.toFixed(3)} {minDensity}</div>
-        </div>
-      </div>
+    <div
+      ref={wrapperRef}
+      className={
+        "relative select-none " +
+        (responsive ? "w-full aspect-square max-w-full " : "") +
+        className
+      }
+      style={responsive ? undefined : { width, height }}
+    >
+      <canvas
+        ref={canvasRef}
+        width={width}
+        height={height}
+        style={{ display: "block", width: "100%", height: "100%" }}
+        aria-label="Analog clock"
+      />
 
-      <div className="relative bg-white rounded-2xl shadow p-3">
-        <svg width={width} height={height - 60} viewBox={`0 0 ${width} ${height - 60}`}>
-          {/* Base dial guide */}
-          <circle cx={cx} cy={cy} r={baseRadius} fill="none" stroke="#e5e7eb" strokeWidth={2} />
-
-          {/* Tick marks & labels */}
-          {ticks.map((t, i) => (
-            <g key={i}>
-              <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke="#9ca3af" strokeWidth={t.label ? 2 : 1} />
-              {t.label && (
-                <text x={t.lx} y={t.ly} fontSize={10} textAnchor="middle" dominantBaseline="middle" fill="#6b7280">
-                  {t.label}
-                </text>
-              )}
-            </g>
-          ))}
-
-          {/* Heat map ring (many tiny quads) */}
-          {segments.map((seg, idx) => (
-            <path key={idx} d={seg.path} fill={seg.color} stroke="none" />
-          ))}
-
-          {/* Center dot */}
-          <circle cx={cx} cy={cy} r={3} fill="#111827" />
-        </svg>
-
-        {/* Legend */}
-        <div className="mt-3 px-1">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-600">low</span>
-            <div className="h-3 flex-1 rounded-full overflow-hidden" style={{
-              background: `linear-gradient(90deg, ${hslHeat(0)}, ${hslHeat(0.25)}, ${hslHeat(0.5)}, ${hslHeat(0.75)}, ${hslHeat(1)})`
-            }} />
-            <span className="text-xs text-gray-600">high</span>
-          </div>
-        </div>
-
-        {/* Controls */}
-        <div className="mt-4 flex items-center gap-3">
-          <label className="text-sm font-medium w-24">Time (s)</label>
-          <input
-            placeholder="time"
-            type="range"
-            min={0.1}
-            max={120}
-            step={0.1}
-            value={t}
-            onChange={(e) => setT(parseFloat(e.target.value))}
-            className="w-full accent-blue-600"
-          />
-          <div className="w-16 text-right tabular-nums text-sm">{t.toFixed(1)}</div>
-        </div>
-      </div>
-
-      <p className="mt-3 text-xs text-gray-600">
-        Color encodes density along the rim (blue→red). Angle 0s is at the top; angles increase clockwise. At time t, the
-        wrapped Gaussian has mean μ·t (mod L) and variance σ²·t.
-      </p>
+      {/* Small status dot in the corner */}
+      <div
+        title={status}
+        style={{
+          position: "absolute",
+          top: 8,
+          right: 8,
+          width: 10,
+          height: 10,
+          borderRadius: 999,
+          background:
+            status === "open"
+              ? "#10b981" // green
+              : status === "connecting"
+              ? "#f59e0b" // amber
+              : status === "paused"
+              ? "#9ca3af" // gray
+              : status === "error"
+              ? "#ef4444" // red
+              : "#d1d5db", // neutral
+          boxShadow: "0 0 0 1px rgba(0,0,0,0.1)",
+        }}
+      />
     </div>
   );
 }
 
-/** Helpers */
-function polarToXY(cx: number, cy: number, r: number, phi: number): [number, number] {
-  const x = cx + r * Math.cos(phi);
-  const y = cy - r * Math.sin(phi); // SVG y axis down
-  return [x, y];
-}
+/**
+ * Draw the full analog clock for the given time.
+ */
+function drawClock(
+  canvas: HTMLCanvasElement,
+  t: { hour: number; minute: number; second: number },
+  showNumbers: boolean
+) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
-// Simple blue→cyan→yellow→red heat scale in HSL
-function hslHeat(u01: number): string {
-  const u = Math.max(0, Math.min(1, u01));
-  const hue = 240 * (1 - u); // 240 (blue) → 0 (red)
-  const sat = 100;           // %
-  const light = 50;          // %
-  return `hsl(${hue}, ${sat}%, ${light}%)`;
-}
+  const W = (canvas.style.width ? parseFloat(canvas.style.width) : canvas.width) || 400;
+  const H = (canvas.style.height ? parseFloat(canvas.style.height) : canvas.height) || 400;
+  const size = Math.min(W, H);
+  const cx = size / 2;
+  const cy = size / 2;
+  const radius = size * 0.45; // padding around
 
-/** Compute wrapped Gaussian density on [0, L): vectorized over thetaSec[] */
-function wrappedGaussianDensity(
-  thetaSec: Float64Array,
-  t: number,
-  mu: number,
-  sigma: number,
-  L: number,
-  stdCoverage = 5
-): Float64Array {
-  const out = new Float64Array(thetaSec.length);
-  const varT = Math.max(1e-9, sigma * sigma * Math.max(t, 1e-9));
-  const std = Math.sqrt(varT);
-  const M = Math.ceil((stdCoverage * std) / L) + 1;
-  const coeff = 1 / Math.sqrt(2 * Math.PI * varT);
-  for (let i = 0; i < thetaSec.length; i++) {
-    const th = thetaSec[i];
-    let sum = 0;
-    for (let m = -M; m <= M; m++) {
-      const x = th + m * L;
-      const z = (x - mu * t);
-      sum += Math.exp(-0.5 * (z * z) / varT);
-    }
-    out[i] = coeff * sum;
+  // Clear
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // reset to CSS pixels (after DPR set in effect)
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  // Face background
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, Math.PI * 2);
+  ctx.fillStyle = "#fff";
+  ctx.fill();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#111827"; // slate-900
+  ctx.stroke();
+
+  // Minute & hour ticks
+  for (let i = 0; i < 60; i++) {
+    const isHour = i % 5 === 0;
+    const angle = (i * Math.PI) / 30; // 360/60
+    const r1 = radius - (isHour ? 14 : 8);
+    const r2 = radius - 2;
+    const x1 = r1 * Math.sin(angle);
+    const y1 = -r1 * Math.cos(angle);
+    const x2 = r2 * Math.sin(angle);
+    const y2 = -r2 * Math.cos(angle);
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineWidth = isHour ? 3 : 1;
+    ctx.strokeStyle = "#111827";
+    ctx.stroke();
   }
-  return out;
+
+  // Numerals (1..12)
+  if (showNumbers) {
+    ctx.fillStyle = "#111827";
+    ctx.font = `${Math.floor(radius * 0.16)}px system-ui, -apple-system, Segoe UI, Roboto, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    for (let n = 1; n <= 12; n++) {
+      const angle = (n * Math.PI) / 6; // 360/12
+      const r = radius * 0.78;
+      const x = r * Math.sin(angle);
+      const y = -r * Math.cos(angle);
+      ctx.fillText(String(n), x, y);
+    }
+  }
+
+  // Compute angles
+  const h = ((t.hour % 12) + t.minute / 60 + t.second / 3600) * (Math.PI / 6); // 30° per hour
+  const m = (t.minute + t.second / 60) * (Math.PI / 30); // 6° per minute
+  const s = t.second * (Math.PI / 30); // 6° per second
+
+  // Hour hand
+  drawHand(ctx, h, radius * 0.5, 6, "#111827");
+  // Minute hand
+  drawHand(ctx, m, radius * 0.7, 4, "#1f2937");
+  // Second hand
+  drawHand(ctx, s, radius * 0.82, 2, "#ef4444");
+
+  // Center cap
+  ctx.beginPath();
+  ctx.arc(0, 0, 5, 0, Math.PI * 2);
+  ctx.fillStyle = "#ef4444";
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawHand(
+  ctx: CanvasRenderingContext2D,
+  angleRad: number,
+  length: number,
+  width: number,
+  color: string
+) {
+  ctx.save();
+  ctx.rotate(angleRad);
+  ctx.beginPath();
+  ctx.moveTo(0, 8); // tail
+  ctx.lineTo(0, -length);
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = color;
+  ctx.stroke();
+  ctx.restore();
+}
+
+/**
+ * Simple demo wrapper. Set NEXT_PUBLIC_STREAM_URL to your Cloud Run /stream endpoint.
+ */
+export default function AnalogClockSSEDemo() {
+  const url = process.env.NEXT_PUBLIC_STREAM_URL || "";
+
+  return (
+    <div style={{ maxWidth: 480, margin: "1rem auto", padding: "0 1rem" }}>
+      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
+        
+      </div>
+
+      <AnalogClockSSE url={url} responsive width={400} height={400} />
+    </div>
+  );
 }

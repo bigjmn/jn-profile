@@ -22,10 +22,10 @@ export default async function WidgetPage({ params }: WidgetPageProps) {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-16 text-center">
+    <div className="mx-auto max-w-4xl px-6 py-16 text-center">
       <div className="space-y-4">
-        <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">{widget.title}</h1>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400">{widget.blurb}</p>
+        <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-6">{widget.title}</h2>
+        <p className="text-left whitespace-pre-line text-lg text-zinc-600 dark:text-zinc-400">{widget.blurb}</p>
       </div>
 
       <div className="mt-10 flex justify-center">

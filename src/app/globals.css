@@ -38,7 +38,6 @@ body {
 }
 
 .panel {
-  background: white;
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
@@ -62,7 +61,7 @@ canvas {
   border-radius: 12px;
   width: min(100%, 500px);
   height: auto;
-  background: white;
+  background: black;
   border: 2px solid #ddd;
   touch-action: none;
   display: block;

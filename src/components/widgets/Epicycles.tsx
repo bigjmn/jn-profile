@@ -154,7 +154,7 @@ const EpicycleVisualizer: React.FC = () => {
 
     if (canvas && ctx) {
       const previousFill = ctx.fillStyle;
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = previousFill;
     }
@@ -182,8 +182,8 @@ const EpicycleVisualizer: React.FC = () => {
 
     drawCtx.lineWidth = 4;
     drawCtx.lineCap = 'round';
-    drawCtx.strokeStyle = '#222';
-    drawCtx.fillStyle = '#fff';
+    drawCtx.strokeStyle = '#fff';
+    drawCtx.fillStyle = '#000';
     drawCtx.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
     drawCtx.beginPath();
 
@@ -452,7 +452,7 @@ const EpicycleVisualizer: React.FC = () => {
         <h1>Draw a shape</h1>
         <div className="canvas-stack">
           <canvas ref={drawCanvasRef} width={400} height={400} />
-          <canvas ref={epiCanvasRef} width={400} height={400} className='absolute inset-0 pointer-events-none bg-transparent border-none' />
+          <canvas ref={epiCanvasRef} id="epicycleCanvas" width={400} height={400} />
         </div>
         <div className="controls">
           <button type="button" onClick={handleClearClick}>

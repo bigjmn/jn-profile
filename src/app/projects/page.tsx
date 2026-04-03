@@ -1,4 +1,5 @@
 import { PreviewCard } from '@/components/preview-card';
+import { WorkProject } from '@/components/WorkProject';
 import { projects } from '@/lib/projects';
 
 export default function ProjectsPage() {
@@ -20,6 +21,26 @@ export default function ProjectsPage() {
         {projects.map((project) => (
           <PreviewCard key={project.slug} preview={project} basePath="projects" />
         ))}
+      </div>
+
+      {/* Professional Work Section */}
+      <div className="mt-24">
+        <h2 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+          Professional Work
+        </h2>
+        <p className="mb-8 max-w-3xl text-zinc-600 dark:text-zinc-400">
+          The projects below represent work completed for clients and employers. Code repositories and live links are not available, as all intellectual property rights belong to the respective organizations.
+        </p>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {/* Example work projects - replace with actual data */}
+          <WorkProject
+            title="Example Project"
+            company="Example Company"
+            technologies={["React", "TypeScript", "Node.js"]}
+            description="This is a placeholder description. Replace this with actual professional work descriptions. Each description should be 3-5 sentences explaining the project scope, your role, and key technical achievements."
+          />
+        </div>
       </div>
     </div>
   );

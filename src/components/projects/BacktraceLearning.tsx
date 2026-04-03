@@ -2,9 +2,10 @@ export default function BacktraceLearning() {
   return (
     <div className="space-y-6 text-left text-zinc-800 dark:text-zinc-200">
       <div className="space-y-2">
-        <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          Backtrace Learning Graph
-        </p>
+        <h1 className="text-zinc-900 dark:text-zinc-100">
+            Backtrace Learning
+
+        </h1>
         <p>
           An interactive learning graph that helps you visualize and track
           knowledge dependencies. Create nodes for questions and resources,
