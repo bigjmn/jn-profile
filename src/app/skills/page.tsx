@@ -82,32 +82,32 @@ function DotBadge() {
   );
 }
 
-function PillButton({
-  active,
-  children,
-  onClick,
-}: {
-  active: boolean;
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={active}
-      onClick={onClick}
-      className={cn(
-        "select-none rounded-full border px-3.5 py-2 text-xs font-medium transition",
-        "border-white/10 bg-white/5 text-white/70",
-        "hover:-translate-y-0.5 hover:bg-white/10 hover:text-white/90 active:translate-y-0",
-        active &&
-          "border-white/20 bg-gradient-to-br from-fuchsia-400/20 to-sky-400/15 text-white/90"
-      )}
-    >
-      {children}
-    </button>
-  );
-}
+// function PillButton({
+//   active,
+//   children,
+//   onClick,
+// }: {
+//   active: boolean;
+//   children: React.ReactNode;
+//   onClick: () => void;
+// }) {
+//   return (
+//     <button
+//       type="button"
+//       aria-pressed={active}
+//       onClick={onClick}
+//       className={cn(
+//         "select-none rounded-full border px-3.5 py-2 text-xs font-medium transition",
+//         "border-white/10 bg-white/5 text-white/70",
+//         "hover:-translate-y-0.5 hover:bg-white/10 hover:text-white/90 active:translate-y-0",
+//         active &&
+//           "border-white/20 bg-gradient-to-br from-fuchsia-400/20 to-sky-400/15 text-white/90"
+//       )}
+//     >
+//       {children}
+//     </button>
+//   );
+// }
 
 function SkillTag({ label }: { label: string }) {
   return (
@@ -240,15 +240,7 @@ export default function SkillsPage() {
   }, [filteredCards]);
 
   return (
-    <div className="min-h-screen bg-[#070A13] text-white">
-      {/* Background accents (matched to your Backtrace project page style) */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-24 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-3xl" />
-        <div className="absolute -bottom-24 left-1/4 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.06)_1px,transparent_0)] [background-size:18px_18px] opacity-30" />
-      </div>
-
-
+    <div className="min-h-screen text-white">
       <main className="relative mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
         {/* Header */}
         <header className="grid gap-3">

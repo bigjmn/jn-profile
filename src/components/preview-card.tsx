@@ -11,9 +11,9 @@ export function PreviewCard({ preview, basePath }: PreviewCardProps) {
   return (
     <Link
       href={`/${basePath}/${preview.slug}`}
-      className="group w-3/4 relative overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900"
+      className="group w-3/4 relative overflow-hidden rounded-3xl border border-white/10 bg-white/3 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/5"
     >
-      <div className="relative aspect-square w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+      <div className="relative aspect-square w-full overflow-hidden bg-black/20">
         <Image
           src={preview.imageSrc}
           alt={preview.title}
@@ -24,7 +24,7 @@ export function PreviewCard({ preview, basePath }: PreviewCardProps) {
         />
       </div>
       <div className="p-6">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+        <h3 className="text-lg font-semibold text-white">
           {preview.title}
         </h3>
       </div>

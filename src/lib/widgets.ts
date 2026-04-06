@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { Preview } from '@/types';
+// import { Preview } from '@/types';
 
 export interface WidgetDefinition extends Preview {
   blurb: string;

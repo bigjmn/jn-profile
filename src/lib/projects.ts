@@ -84,7 +84,7 @@ export const projects: ProjectDefinition[] = [
   {
     title: "Backtrace Learning",
     slug: "learning-backtrace",
-    imageSrc: "/images/placeholder-2.svg",
+    imageSrc: "/projects/backtrace-cover.png",
     blurb: "A follow-up demo project.",
     pageProps: testProps,
   },
@@ -103,10 +103,10 @@ export const projects: ProjectDefinition[] = [
     pageProps: testProps,
   },
   {
-    title: "Sample Project 5",
-    slug: "sample-project-5",
-    imageSrc: "/images/placeholder-5.svg",
-    blurb: "Placeholder content for the fifth project.",
+    title: "Shock and Draw",
+    slug: "shock-and-draw",
+    imageSrc: "/projects/shock-draw.png",
+    blurb: "A team drawing-and-guessing game with a chaotic twist.",
     pageProps: testProps,
   },
   {

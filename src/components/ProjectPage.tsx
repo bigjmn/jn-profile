@@ -274,14 +274,7 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#070A13] text-white">
-      {/* Background accents */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-24 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-3xl" />
-        <div className="absolute -bottom-24 left-1/4 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.06)_1px,transparent_0)] [background-size:18px_18px] opacity-30" />
-      </div>
-
+    <div className="min-h-screen text-white">
       <main className="relative mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
         {/* Top bar */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

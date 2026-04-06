@@ -4,12 +4,12 @@ import { projects } from '@/lib/projects';
 
 export default function ProjectsPage() {
   return (
-    <div className="mx-auto max-w-7xl px-6 py-16">
+    <div className="relative mx-auto max-w-7xl px-6 py-16">
       <div className="mb-12">
-        <h1 className="mb-4 text-4xl font-bold text-zinc-900 dark:text-zinc-100">
+        <h1 className="mb-4 text-4xl font-bold text-white">
           Projects
         </h1>
-        <p className="max-w-3xl text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="max-w-3xl text-lg text-white/75">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
           ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -25,10 +25,10 @@ export default function ProjectsPage() {
 
       {/* Professional Work Section */}
       <div className="mt-24">
-        <h2 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+        <h2 className="mb-4 text-3xl font-bold text-white">
           Professional Work
         </h2>
-        <p className="mb-8 max-w-3xl text-zinc-600 dark:text-zinc-400">
+        <p className="mb-8 max-w-3xl text-white/75">
           The projects below represent work completed for clients and employers. Code repositories and live links are not available, as all intellectual property rights belong to the respective organizations.
         </p>
 

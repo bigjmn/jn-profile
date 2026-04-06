@@ -7,13 +7,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #070A13;
+  --foreground: #ffffff;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #070A13;
+  --foreground: #ffffff;
 }
 
 @theme inline {
