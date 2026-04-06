@@ -29,15 +29,15 @@ I deployed this clock on October 20, 2025 at 8 p.m. EST, it showed the correct t
 I think it would be cool to build a physical version at some point, but that’s a project for another day. 
 `
 
-const angelDescriber = `This one comes to us from my favorite mathematician, John Conway. 
+const angelDescriber = `This one comes to us from my favorite mathematician, John Conway.
 
-Can the Devil, who removes one square per move from an infinite chessboard, strand the Angel, who can jump up to 1000 squares per move? It seems unlikely, but the answer is unknown. Andreas Blass and I have proved that the Devil can strand an Angel who’s handicapped in one of several ways. I end with a challenge for the solution the general problem.
+<em>Can the Devil, who removes one square per move from an infinite chessboard, strand the Angel, who can jump up to 1000 squares per move? It seems unlikely, but the answer is unknown. Andreas Blass and I have proved that the Devil can strand an Angel who's handicapped in one of several ways. I end with a challenge for the solution the general problem.</em>
 
-Needless to say, the answer now IS known, at least for the general problem posed by Conway at the end of the paper - can an angel of sufficiently high power (jumping range) win? 
+Needless to say, the answer now IS known, at least for the general problem posed by Conway at the end of the paper - can an angel of sufficiently high power (jumping range) win?
 
-Yes he can! In fact, an angel of power 2 or greater can escape the devil indefinitely. The angel of power 1 loses (as noted by Conway) as does the angel of any power who always increases his distance from the origin. 
+Yes he can! In fact, an angel of power 2 or greater can escape the devil indefinitely. The angel of power 1 loses (as noted by Conway) as does the angel of any power who always increases his distance from the origin.
 
-I’ve implemented the game below, as well as some of the angel variants Conway examines in his paper.  
+I've implemented the game below, as well as some of the angel variants Conway examines in his paper.
 `
 const epicycleDescriber = `Any curve can be decomposed into a series of periodic functions. I’ve implemented the fast fourier transform (Cooley-Turkey algorithm) so you can try it yourself!`
 export const widgets: WidgetDefinition[] = [

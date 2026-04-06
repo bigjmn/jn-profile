@@ -1,6 +1,7 @@
 import { PreviewCard } from '@/components/preview-card';
 import { WorkProject } from '@/components/WorkProject';
 import { projects } from '@/lib/projects';
+import { workProjects } from '@/lib/workProjects';
 
 export default function ProjectsPage() {
   return (
@@ -33,13 +34,15 @@ export default function ProjectsPage() {
         </p>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Example work projects - replace with actual data */}
-          <WorkProject
-            title="Example Project"
-            company="Example Company"
-            technologies={["React", "TypeScript", "Node.js"]}
-            description="This is a placeholder description. Replace this with actual professional work descriptions. Each description should be 3-5 sentences explaining the project scope, your role, and key technical achievements."
-          />
+          {workProjects.map((project, index) => (
+            <WorkProject
+              key={index}
+              title={project.title}
+              company={project.company}
+              technologies={project.technologies}
+              description={project.description}
+            />
+          ))}
         </div>
       </div>
     </div>

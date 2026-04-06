@@ -22,14 +22,17 @@ export default async function WidgetPage({ params }: WidgetPageProps) {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16 text-center">
+    <div className="relative mx-auto max-w-4xl px-6 py-16 text-center">
       <div className="space-y-4">
-        <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-6">{widget.title}</h2>
-        <p className="text-left whitespace-pre-line text-lg text-zinc-600 dark:text-zinc-400">{widget.blurb}</p>
+        <h2 className="text-4xl font-bold text-white mb-6">{widget.title}</h2>
+        <div
+          className="text-left whitespace-pre-line text-lg text-white/75"
+          dangerouslySetInnerHTML={{ __html: widget.blurb }}
+        />
       </div>
 
       <div className="mt-10 flex justify-center">
-        <div className="w-full max-w-5xl rounded-2xl border border-zinc-200 bg-white p-6 shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="w-full max-w-5xl rounded-3xl border border-white/10 bg-white/3 p-6 shadow-md">
           <WidgetRenderer slug={widget.slug} />
         </div>
       </div>
