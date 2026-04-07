@@ -29,13 +29,13 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070A13]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#070A13]/80">
       <nav className="mx-auto max-w-7xl px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Name */}
           <Link
             href="/"
-            className="text-xl font-semibold text-white transition-colors hover:text-white/80"
+            className="text-xl font-semibold text-slate-900 transition-colors hover:text-slate-600 dark:text-white dark:hover:text-white/80"
           >
             Portfolio
           </Link>
@@ -48,8 +48,8 @@ export function Header() {
                 href={item.href}
                 className={`text-sm font-medium transition-colors duration-200 ${
                   isActive(item.href)
-                    ? 'text-white'
-                    : 'text-white/70 hover:text-white'
+                    ? 'text-slate-900 dark:text-white'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white'
                 }`}
               >
                 {item.name}
@@ -60,12 +60,12 @@ export function Header() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="rounded-lg bg-white/10 p-2 transition-colors hover:bg-white/15"
+                className="rounded-lg bg-slate-100 p-2 transition-colors hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15"
                 aria-label="Toggle dark mode"
               >
                 {theme === 'dark' ? (
                   <svg
-                    className="h-5 w-5 text-white"
+                    className="h-5 w-5 text-slate-700 dark:text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -79,7 +79,7 @@ export function Header() {
                   </svg>
                 ) : (
                   <svg
-                    className="h-5 w-5 text-white"
+                    className="h-5 w-5 text-slate-700 dark:text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -101,12 +101,12 @@ export function Header() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="rounded-lg bg-white/10 p-2 transition-colors hover:bg-white/15"
+                className="rounded-lg bg-slate-100 p-2 transition-colors hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15"
                 aria-label="Toggle dark mode"
               >
                 {theme === 'dark' ? (
                   <svg
-                    className="h-5 w-5 text-white"
+                    className="h-5 w-5 text-slate-700 dark:text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -120,7 +120,7 @@ export function Header() {
                   </svg>
                 ) : (
                   <svg
-                    className="h-5 w-5 text-white"
+                    className="h-5 w-5 text-slate-700 dark:text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -137,12 +137,12 @@ export function Header() {
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-lg bg-white/10 p-2 transition-colors hover:bg-white/15"
+              className="rounded-lg bg-slate-100 p-2 transition-colors hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
                 <svg
-                  className="h-5 w-5 text-white"
+                  className="h-5 w-5 text-slate-700 dark:text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -156,7 +156,7 @@ export function Header() {
                 </svg>
               ) : (
                 <svg
-                  className="h-5 w-5 text-white"
+                  className="h-5 w-5 text-slate-700 dark:text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -175,7 +175,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="mt-4 space-y-2 border-t border-white/10 pt-4 md:hidden">
+          <div className="mt-4 space-y-2 border-t border-slate-200 pt-4 dark:border-white/10 md:hidden">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -183,8 +183,8 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   isActive(item.href)
-                    ? 'bg-white/10 text-white'
-                    : 'text-white/70 hover:bg-white/5 hover:text-white'
+                    ? 'bg-slate-100 text-slate-900 dark:bg-white/10 dark:text-white'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/5 dark:hover:text-white'
                 }`}
               >
                 {item.name}

@@ -24,15 +24,15 @@ export default async function WidgetPage({ params }: WidgetPageProps) {
   return (
     <div className="relative mx-auto max-w-4xl px-6 py-16 text-center">
       <div className="space-y-4">
-        <h2 className="text-4xl font-bold text-white mb-6">{widget.title}</h2>
+        <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">{widget.title}</h2>
         <div
-          className="text-left whitespace-pre-line text-lg text-white/75"
+          className="text-left whitespace-pre-line text-lg text-slate-600 dark:text-white/75"
           dangerouslySetInnerHTML={{ __html: widget.blurb }}
         />
       </div>
 
       <div className="mt-10 flex justify-center">
-        <div className="w-full max-w-5xl rounded-3xl border border-white/10 bg-white/3 p-6 shadow-md">
+        <div className="w-full max-w-5xl rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/3 p-6 shadow-md">
           <WidgetRenderer slug={widget.slug} />
         </div>
       </div>

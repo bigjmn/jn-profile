@@ -68,22 +68,45 @@ export default function WilsonMaze(){
     // }, [stepTime, mazeSize, isTorus])
 
     return (
-        <div className="w-full flex justify-center flex-col lg:flex-row">
-            <div className="w-full flex justify-center lg:flex-col lg:w-1/4">
-            <label className="inline-flex items-center mb-5 cursor-pointer">
-                <input type="checkbox" className="sr-only peer" checked={isTorus} onChange={(e) => setIsTorus(e.target.checked)} />
-                <div className="relative w-11 h-6 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand"></div>
-                <span className="select-none ms-3 text-sm font-medium text-heading">Large toggle</span>
-            </label>
-            <label className="inline-flex items-center mb-5 cursor-pointer">
-                <span className="select-none ms-3 text-sm font-medium text-heading">Maze Size</span>
+        <div className="w-full flex flex-col gap-6 lg:flex-row lg:gap-8">
+            {/* Options Panel */}
+            <div className="w-full flex flex-col gap-4 lg:w-64 lg:flex-shrink-0">
+                <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" checked={isTorus} onChange={(e) => setIsTorus(e.target.checked)} />
+                    <div className="relative w-11 h-6 bg-slate-300 dark:bg-slate-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-fuchsia-200 dark:peer-focus:ring-fuchsia-900 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-fuchsia-500"></div>
+                    <span className="select-none text-sm font-medium text-slate-700 dark:text-slate-200">Torus Topology</span>
+                </label>
 
-                <input onClick={(e) => e.currentTarget.select()} type="number" placeholder="10" id="number-input" aria-describedby="helper-text-explanation" className="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" value={mazeSize} onChange={e => setMazeSize(e.target.valueAsNumber)} />
-            </label>
-            <button type="button" onClick={generateMaze}>Generate!</button>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="maze-size" className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                        Maze Size
+                    </label>
+                    <input
+                        id="maze-size"
+                        onClick={(e) => e.currentTarget.select()}
+                        type="number"
+                        placeholder="17"
+                        min="5"
+                        max="50"
+                        className="block w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500 shadow-sm"
+                        value={mazeSize}
+                        onChange={e => setMazeSize(e.target.valueAsNumber)}
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    onClick={generateMaze}
+                    className="w-full px-4 py-2.5 bg-fuchsia-600 hover:bg-fuchsia-700 active:bg-fuchsia-800 text-white font-semibold rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                >
+                    Generate Maze
+                </button>
             </div>
-            <div></div>
-            <canvas ref={canvasRef} width={400} height={400} />
+
+            {/* Canvas */}
+            <div className="flex-1 flex justify-center items-center">
+                <canvas ref={canvasRef} width={400} height={400} className="max-w-full h-auto" />
+            </div>
         </div>
     )
 }

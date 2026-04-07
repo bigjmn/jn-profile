@@ -113,9 +113,9 @@ function SkillTag({ label }: { label: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-xl border border-white/15",
-        "bg-white/5 px-3 py-2 text-sm text-white/85",
-        "transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10"
+        "inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-white/15",
+        "bg-slate-100 dark:bg-white/5 px-3 py-2 text-sm text-slate-700 dark:text-white/85",
+        "transition hover:-translate-y-0.5 hover:border-slate-400 dark:hover:border-white/20 hover:bg-slate-200 dark:hover:bg-white/10"
       )}
     >
       {label}
@@ -131,7 +131,7 @@ function ImportanceBadge({ importance }: { importance: Importance }) {
     leaveout: "Leave out",
   };
   return (
-    <span className="rounded-full border border-white/15 bg-white/5 px-2 py-1 font-mono text-[11px] text-white/70">
+    <span className="rounded-full border border-slate-300 dark:border-white/15 bg-slate-100 dark:bg-white/5 px-2 py-1 font-mono text-[11px] text-slate-600 dark:text-white/70">
       {map[importance]}
     </span>
   );
@@ -240,11 +240,11 @@ export default function SkillsPage() {
   }, [filteredCards]);
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-slate-900 dark:text-white">
       <main className="relative mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
         {/* Header */}
         <header className="grid gap-3">
-          <div className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
+          <div className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-white/60">
             <DotBadge />
             Portfolio Skills View
           </div>
@@ -254,7 +254,7 @@ export default function SkillsPage() {
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
                 Engineering Skills
               </h1>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70 sm:text-base">
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-white/70 sm:text-base">
                 Organized for broad employer appeal. Use filters to scan categories and search
                 to find specific tools.
               </p>
@@ -334,25 +334,25 @@ export default function SkillsPage() {
             <article
               key={card.key}
               className={cn(
-                "relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]",
-                "shadow-[0_0_0_1px_rgba(255,255,255,0.04)]",
+                "relative overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03]",
+                "shadow-sm dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04)]",
                 // responsive spans similar to original: col6 at >=820px; we use lg breakpoint
                 "lg:col-span-6"
               )}
             >
-              {/* subtle highlight wash like the original card::before */}
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_260px_at_10%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
+              {/* subtle highlight wash */}
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_260px_at_10%_0%,rgba(100,116,139,0.05),transparent_60%)] dark:bg-[radial-gradient(600px_260px_at_10%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
 
-              <div className="relative border-b border-white/10 px-5 pb-3 pt-4">
+              <div className="relative border-b border-slate-200 dark:border-white/10 px-5 pb-3 pt-4">
                 <div className="flex items-baseline justify-between gap-3">
-                  <div className="text-base font-semibold tracking-tight text-white/95">
+                  <div className="text-base font-semibold tracking-tight text-slate-900 dark:text-white/95">
                     {card.title} <span className="ml-2 inline-block align-middle" />
                   </div>
                   <ImportanceBadge importance={card.importance} />
                 </div>
               </div>
 
-              <p className="relative px-5 pt-3 text-sm leading-relaxed text-white/65">
+              <p className="relative px-5 pt-3 text-sm leading-relaxed text-slate-600 dark:text-white/65">
                 {card.desc}
               </p>
 
@@ -367,18 +367,18 @@ export default function SkillsPage() {
 
         {/* Footer note */}
         <section className="mt-10">
-          <div className="rounded-3xl border border-white/15 border-dashed bg-white/[0.03] p-6 text-white/70">
+          <div className="rounded-3xl border border-slate-300 dark:border-white/15 border-dashed bg-slate-50 dark:bg-white/[0.03] p-6 text-slate-600 dark:text-white/70">
             <div className="text-sm">
-              <span className="font-semibold text-white/90">Suggested one-liner:</span>
+              <span className="font-semibold text-slate-900 dark:text-white/90">Suggested one-liner:</span>
               <br />
               Engineering Focus:{" "}
-              <span className="text-white/85">
+              <span className="text-slate-700 dark:text-white/85">
                 Full-stack systems, real-time applications, scalable infrastructure, and
                 applied ML.
               </span>
             </div>
-            <div className="mt-3 text-xs text-white/50">
-              Tip: If you’re targeting non-ML roles, keep ML as “Optional” or compress it.
+            <div className="mt-3 text-xs text-slate-500 dark:text-white/50">
+              Tip: If you're targeting non-ML roles, keep ML as "Optional" or compress it.
             </div>
           </div>
         </section>

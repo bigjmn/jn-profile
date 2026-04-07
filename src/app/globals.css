@@ -7,8 +7,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #070A13;
-  --foreground: #ffffff;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 .dark {

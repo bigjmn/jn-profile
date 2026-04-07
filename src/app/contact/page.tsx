@@ -2,10 +2,10 @@ export default function ContactPage() {
   return (
     <div className="relative mx-auto max-w-7xl px-6 py-16">
       <div className="mb-12">
-        <h1 className="mb-4 text-4xl font-bold text-white">
+        <h1 className="mb-4 text-4xl font-bold text-slate-900 dark:text-white">
           Contact
         </h1>
-        <p className="max-w-3xl text-lg text-white/75">
+        <p className="max-w-3xl text-lg text-slate-600 dark:text-white/75">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
           ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -15,7 +15,7 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="prose prose-invert max-w-none">
+      <div className="prose prose-slate max-w-none dark:prose-invert">
         <p>
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae

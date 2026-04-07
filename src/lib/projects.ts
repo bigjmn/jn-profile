@@ -109,13 +109,13 @@ export const projects: ProjectDefinition[] = [
     blurb: "A team drawing-and-guessing game with a chaotic twist.",
     pageProps: testProps,
   },
-  {
-    title: "Sample Project 6",
-    slug: "sample-project-6",
-    imageSrc: "/images/placeholder-6.svg",
-    blurb: "Room for a sixth project write-up.",
-    pageProps: testProps,
-  },
+  // {
+  //   title: "Sample Project 6",
+  //   slug: "sample-project-6",
+  //   imageSrc: "/images/placeholder-6.svg",
+  //   blurb: "Room for a sixth project write-up.",
+  //   pageProps: testProps,
+  // },
 ];
 
 export const projectsBySlug = projects.reduce<Record<string, ProjectDefinition>>((acc, project) => {

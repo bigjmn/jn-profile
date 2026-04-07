@@ -451,7 +451,7 @@ export default function AngelDevil() {
           if (isEaten) fill = darkMode ? "#7f1d1d" : "#dc2626";
           else if (isHighlighted) fill = darkMode ? "#854d0e" : "#fbbf24";
           else if (isVisited) fill = darkMode ? "#164e63" : "#67e8f9";
-          else if (wasPreviouslyReachable) fill = darkMode ? "#0c4a6e" : "#bae6fd";
+          else if (wasPreviouslyReachable) fill = darkMode ? "#1a1a1a" : "#ffffff";
           else if (isValidMove && activeTool === "select") fill = darkMode ? "#065f46" : "#86efac";
 
           const x = (q + halfSize) * cellSize;
@@ -521,7 +521,7 @@ export default function AngelDevil() {
           if (isEaten) fill = darkMode ? "#7f1d1d" : "#dc2626";
           else if (isHighlighted) fill = darkMode ? "#854d0e" : "#fbbf24";
           else if (isVisited) fill = darkMode ? "#164e63" : "#67e8f9";
-          else if (wasPreviouslyReachable) fill = darkMode ? "#0c4a6e" : "#bae6fd";
+          else if (wasPreviouslyReachable) fill = darkMode ? "#1a1a1a" : "#ffffff";
           else if (isValidMove && activeTool === "select") fill = darkMode ? "#065f46" : "#86efac";
 
           const { x, y } = hexToPixel(q, r, hexSize);
@@ -848,11 +848,11 @@ export default function AngelDevil() {
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Eaten</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className={`w-5 h-5 rounded ${darkMode ? "bg-cyan-900" : "bg-cyan-300"}`}></div>
+                <div className={`w-5 h-5 rounded `}></div>
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Visited</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className={`w-5 h-5 rounded`} style={{ backgroundColor: darkMode ? "#0c4a6e" : "#bae6fd" }}></div>
+                <div className={`w-5 h-5 rounded`} style={{ backgroundColor: darkMode ? "#1a1a1a" : "#ffffff" }}></div>
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Prev. Reach.</span>
               </div>
               <div className="flex items-center gap-2">
@@ -1004,7 +1004,7 @@ export default function AngelDevil() {
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Visited</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className={`w-4 h-4 rounded`} style={{ backgroundColor: darkMode ? "#0c4a6e" : "#bae6fd" }}></div>
+                <div className={`w-4 h-4 rounded`} style={{ backgroundColor: darkMode ? "#1a1a1a" : "#ffffff" }}></div>
                 <span className={darkMode ? "text-gray-300" : "text-gray-700"}>Prev. Reach.</span>
               </div>
               <div className="flex items-center gap-1">
