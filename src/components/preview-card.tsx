@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Preview } from '@/types';
+// import { Preview } from '@/types';
 
 interface PreviewCardProps {
   preview: Preview;

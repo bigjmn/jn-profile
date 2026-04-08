@@ -185,7 +185,8 @@ interface ProjectPageProps {
   projectTitle:string;
   mainDescription:string;
   topCard:TopcardsProps;
-  features:FeatureCardProps[]
+  features:FeatureCardProps[];
+  projectLinks:ProjectLink[];
 
 }
 
@@ -245,8 +246,10 @@ const testProps:ProjectPageProps = {
       title:"project first workflow blahblah",
       description:"hello first feature",
       icon:<span>?</span>
-    }
-  ]
+    },
+    
+  ],
+  projectLinks:[]
 
 }
 export default function ProjectPageTest(){
