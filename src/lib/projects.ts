@@ -66,6 +66,9 @@ const testProps:ProjectPageProps = {
       description:"hello first feature",
       icon:BsHouse
     }
+  ],
+  projectLinks: [
+    {linkType:'website', linkUrl: "triojam.com"}
   ]
 
 }

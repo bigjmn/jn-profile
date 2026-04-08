@@ -84,6 +84,9 @@ const testProps:ProjectPageProps = {
         description: "Synchronized, clean transitions between game states for improved UX",
         icon:<BsFilm/>
     }
+  ],
+  projectLinks: [
+    {linkType:'github', linkUrl:"https://github.com/bigjmn/shock-and-draw"}
   ]
 
 }

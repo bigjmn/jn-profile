@@ -93,6 +93,10 @@ const testProps:ProjectPageProps = {
       description:"Playable in the browser, with mobile-first design and full touch support.",
       icon:<BsGlobe/>
     }
+  ],
+  projectLinks: [
+    {linkType:'website', linkUrl: "triojam.com"},
+    {linkType:'github', linkUrl:"https://github.com/bigjmn/tjam-v2"}
   ]
 
 }

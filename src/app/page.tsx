@@ -57,9 +57,10 @@ export default async function Home() {
         <h1 className="hero-anim hero-anim-d1 mb-6 text-5xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-7xl">
           Jesse Nicholas
         </h1>
+        <div className='w-full h-6' />
         <p className="hero-anim hero-anim-d2 mb-12 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-white/65">
           I build technically rigorous and creatively ambitious products — spanning full-stack
-          development, real-time systems, and applied AI, always through a mathematical lens.
+          development, real-time systems, mobile games, and applied AI.
         </p>
         <div className="hero-anim hero-anim-d3 flex flex-wrap justify-center gap-4">
           <a
@@ -212,8 +213,7 @@ export default async function Home() {
             </p>
             <h2 className="mb-4 text-4xl font-bold text-white">Mathematics</h2>
             <p className="mb-14 max-w-3xl text-slate-400">
-              Essays, explorations, and interactive curiosities from Crude Euler — my math writing
-              and problem-solving journal.
+              Essays, explorations, and interactive curiosities from my math and game theory blog.
             </p>
           </FadeIn>
 

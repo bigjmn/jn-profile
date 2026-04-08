@@ -54,6 +54,9 @@ const testProps:ProjectPageProps = {
       icon:<BsBoundingBox/>
     },
     
+  ],
+  projectLinks: [
+    {linkType:'github', linkUrl:"https://github.com/bigjmn/backtrace-learning-graph"}
   ]
 
 }

@@ -158,15 +158,11 @@ export function FeatureCard({
 }: FeatureCardProps) {
   return (
     <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/3 p-5 shadow-sm dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
-      <div className="flex items-start gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/90">
-          {icon}
-        </div>
-        <div>
-          <div className="text-base font-semibold text-slate-900 dark:text-white">{title}</div>
-          <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-white/75">{description}</p>
-        </div>
+      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-white/10 dark:to-white/5 text-slate-600 dark:text-white/80 shadow-sm dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] [&>svg]:h-5 [&>svg]:w-5">
+        {icon}
       </div>
+      <div className="text-base font-semibold text-slate-900 dark:text-white">{title}</div>
+      <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-white/75">{description}</p>
     </div>
   );
 }
@@ -258,7 +254,63 @@ export default function ProjectPageTest(){
     <ProjectPage {...testProps}/>
   )
 }
-export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCard, features}:ProjectPageProps) {
+function AppStoreIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.14-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04l-.08.27zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+    </svg>
+  );
+}
+
+function GlobeIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.75" />
+      <path d="M12 3c-2.4 2.8-3.8 5.7-3.8 9s1.4 6.2 3.8 9M12 3c2.4 2.8 3.8 5.7 3.8 9s-1.4 6.2-3.8 9M3 12h18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ProjectLink({ linkType, linkUrl }: ProjectLinkProps) {
+  const configs = {
+    github: {
+      label: 'View on GitHub',
+      icon: <GithubIcon className="h-5 w-5" />,
+      style: cn(
+        'inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-5 py-3',
+        'text-sm font-semibold text-white dark:text-black hover:opacity-90 active:opacity-80'
+      ),
+    },
+    'app store': {
+      label: 'App Store',
+      icon: <AppStoreIcon className="h-5 w-5" />,
+      style: cn(
+        'inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0071e3] px-5 py-3',
+        'text-sm font-semibold text-white hover:opacity-90 active:opacity-80'
+      ),
+    },
+    website: {
+      label: 'Visit Website',
+      icon: <GlobeIcon className="h-5 w-5" />,
+      style: cn(
+        'inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-5 py-3',
+        'text-sm font-semibold text-slate-700 dark:text-white/90 hover:bg-slate-200 dark:hover:bg-white/10 active:bg-slate-300 dark:active:bg-white/15'
+      ),
+    },
+  };
+
+  const { label, icon, style } = configs[linkType];
+
+  return (
+    <a href={linkUrl} target="_blank" rel="noreferrer" className={style}>
+      {icon}
+      {label}
+      <ExternalLinkIcon className="h-4 w-4 opacity-70" />
+    </a>
+  );
+}
+
+export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCard, features, projectLinks = []}:ProjectPageProps) {
   const leftColRef = useRef<HTMLDivElement>(null);
   const [leftColHeight, setLeftColHeight] = useState<number | null>(null);
 
@@ -277,7 +329,7 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
     <div className="min-h-screen text-slate-900 dark:text-white">
       <main className="relative mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
         {/* Top bar */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {/* <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-white/80">
               Portfolio Project
@@ -300,7 +352,7 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
             View on GitHub
             <ExternalLinkIcon className="h-4 w-4 opacity-80" />
           </a>
-        </div>
+        </div> */}
 
         {/* Hero */}
         <section className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -321,7 +373,7 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
             </div>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a
+              {/* <a
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noreferrer"
@@ -333,7 +385,7 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
                 <GithubIcon className="h-5 w-5" />
                 GitHub Repo
                 <ExternalLinkIcon className="h-4 w-4 opacity-80" />
-              </a>
+              </a> */}
 
               <a
                 href="#screens"
@@ -430,11 +482,11 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
             A few UI moments from the app—node creation, tagging, and graph navigation.
           </p>
 
-          <div className="mt-5 grid gap-4 lg:grid-cols-3">
+          <div className="mt-5 columns-1 sm:columns-2 lg:columns-3 gap-4">
             {shots.map((s, idx) => (
               <figure
                 key={idx}
-                className="overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/3"
+                className="break-inside-avoid mb-4 overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/3"
               >
                 <img
                   src={s.src}
@@ -463,24 +515,16 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
                   Check out the repo for setup, structure, and ongoing improvements.
                 </p>
               </div>
-              <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noreferrer"
-                className={cn(
-                  "inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-5 py-3",
-                  "text-sm font-semibold text-white dark:text-black hover:opacity-95 active:opacity-90"
-                )}
-              >
-                <GithubIcon className="h-5 w-5" />
-                Open GitHub
-                <ExternalLinkIcon className="h-4 w-4 opacity-80" />
-              </a>
+              <div className="flex flex-wrap gap-3">
+                {projectLinks.map((link: ProjectLinkProps, i: number) => (
+                  <ProjectLink key={i} linkType={link.linkType} linkUrl={link.linkUrl} />
+                ))}
+              </div>
             </div>
           </div>
 
           <div className="mt-6 text-center text-xs text-slate-400 dark:text-white/45">
-            © {new Date().getFullYear()} • Backtrace Learning Graph
+            © {new Date().getFullYear()} • J Nicks Productions
           </div>
         </section>
       </main>

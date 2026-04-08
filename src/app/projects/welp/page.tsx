@@ -76,6 +76,9 @@ const testProps:ProjectPageProps = {
         description: "Uses Yelp's business API to guarantee your result is open and (if relevant) delivering.",
         icon:<BsClockHistory/>
     }
+  ],
+  projectLinks: [
+    {linkType:'github',linkUrl:"https://github.com/bigjmn/welp-app"}
   ]
 
 }

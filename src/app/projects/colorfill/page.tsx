@@ -53,6 +53,9 @@ const testProps: ProjectPageProps = {
       description: "Get familiar with basic graph concepts (nodes, edges, connectivity) as well as more advanced topics (n-colorability, greedy algorithms)",
       icon: <BsBook />
     }
+  ],
+  projectLinks: [
+    {linkType: "github", linkUrl: "https://github.com/bigjmn/colorfill-v2"}
   ]
 }
 
