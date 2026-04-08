@@ -23,11 +23,35 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-anim {
+  animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-anim-d0 { animation-delay: 0ms; }
+.hero-anim-d1 { animation-delay: 80ms; }
+.hero-anim-d2 { animation-delay: 200ms; }
+.hero-anim-d3 { animation-delay: 340ms; }
+.hero-anim-d4 { animation-delay: 600ms; }
 .app {
   display: grid;
   gap: 2rem;
