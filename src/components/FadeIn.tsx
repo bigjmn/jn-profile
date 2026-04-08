@@ -16,7 +16,7 @@ export function FadeIn({ children, delay = 0, className = '', direction = 'up' }
     const el = ref.current;
     if (!el) return;
 
-    el.style.transition = `opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`;
+    el.style.transition = `opacity 1.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 1.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,7 +35,7 @@ export function FadeIn({ children, delay = 0, className = '', direction = 'up' }
 
   const initialTransform =
     direction === 'up'
-      ? 'translateY(36px)'
+      ? 'translateY(66px)'
       : direction === 'left'
         ? 'translateX(-36px)'
         : 'translateX(36px)';

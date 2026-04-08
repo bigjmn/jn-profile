@@ -98,7 +98,7 @@ export default async function Home() {
       </section>
 
       {/* ── Projects ─────────────────────────────────────── */}
-      <section id="projects" className="bg-slate-900 px-16 py-24">
+      <section id="projects" className="bg-slate-800 px-16 py-24">
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/35">
@@ -144,7 +144,7 @@ export default async function Home() {
       </section>
 
       {/* ── Widgets ──────────────────────────────────────── */}
-      <section id="widgets" className="bg-[#0d1525] px-16 py-24">
+      <section id="widgets" className="bg-[#030507] px-16 py-24">
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/35">
@@ -168,7 +168,7 @@ export default async function Home() {
       </section>
 
       {/* ── Skills ───────────────────────────────────────── */}
-      <section id="skills" className="bg-[#0f172a] px-16 py-24">
+      <section id="skills" className="bg-slate-800 px-16 py-24">
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/35">
@@ -204,7 +204,7 @@ export default async function Home() {
       </section>
 
       {/* ── Math ─────────────────────────────────────────── */}
-      <section id="math" className="bg-slate-900 px-16 py-24">
+      <section id="math" className="bg-[#030507] px-16 py-24">
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/35">
@@ -258,7 +258,7 @@ export default async function Home() {
       </section>
 
       {/* ── Contact ──────────────────────────────────────── */}
-      <section id="contact" className="bg-[#07090f] px-16 py-32">
+      <section id="contact" className="bg-slate-800 px-16 py-32">
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/35">

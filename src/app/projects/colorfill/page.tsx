@@ -50,7 +50,7 @@ const testProps: ProjectPageProps = {
     },
     {
       title: "Graph theory in action",
-      description: "Learn fundamental graph concepts (nodes, edges, connectivity) while solving puzzles—education disguised as entertainment.",
+      description: "Get familiar with basic graph concepts (nodes, edges, connectivity) as well as more advanced topics (n-colorability, greedy algorithms)",
       icon: <BsBook />
     }
   ]

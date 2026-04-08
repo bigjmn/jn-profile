@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ProjectPage } from '@/components/ProjectPage';
-import { BsHouse } from "react-icons/bs";
+import { BsCollection, BsSearch, BsBoundingBox } from "react-icons/bs";
 const maindescript="A visual way to map how you learn: track questions you’re trying to answer, attach the resources you used, and grow a dependency graph of ideas so you can see what to study next."
 const testProps:ProjectPageProps = {
   shots: [
@@ -34,30 +34,26 @@ const testProps:ProjectPageProps = {
   topCard:{
     coreIdea:"Make learning dependencies visible",
     greatFor:"self-study",
-    outcome:"outcome here"
+    outcome:"Free to use, easy to set up platform"
     
   },
   features:[
     {
-      title:"project first workflow blahblah",
-      description:"hello first feature",
-      icon:<BsHouse/>
+      title:"Organized resource and question data",
+      description:"Resources support a \"topic\" flair. Questions can be updated to reflect understanding level.",
+      icon:<BsCollection/>
     },
     {
-      title:"project first workflow blahblah",
-      description:"hello first feature",
-      icon:<BsHouse/>
+      title:"AI-powered resource search",
+      description:"Leverages OpenAI API to assist in finding resources to given questions.",
+      icon:<BsSearch/>
     },
     {
-      title:"project first workflow blahblah",
-      description:"hello first feature",
-      icon:<BsHouse/>
+      title:"Interactive workspace",
+      description:"View allows zoom in/out, all cards have click-and-drag functionality",
+      icon:<BsBoundingBox/>
     },
-    {
-      title:"project first workflow blahblah",
-      description:"hello first feature",
-      icon:<BsHouse/>
-    }
+    
   ]
 
 }
