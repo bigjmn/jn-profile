@@ -49,22 +49,22 @@ const testProps:ProjectPageProps = {
     {
       title:"project first workflow blahblah",
       description:"hello first feature",
-      icon:BsHouse
+      icon:<BsHouse />
     },
     {
       title:"project first workflow blahblah",
       description:"hello first feature",
-      icon:BsHouse
+      icon:<BsHouse />
     },
     {
       title:"project first workflow blahblah",
       description:"hello first feature",
-      icon:BsHouse
+      icon:<BsHouse />
     },
     {
       title:"project first workflow blahblah",
       description:"hello first feature",
-      icon:BsHouse
+      icon:<BsHouse />
     }
   ],
   projectLinks: [

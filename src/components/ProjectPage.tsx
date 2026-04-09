@@ -16,12 +16,6 @@ import React, { useEffect, useRef, useState } from "react";
 
 const GITHUB_URL = "https://github.com/bigjmn/backtrace-learning-graph";
 
-type Shot = {
-  src: string;
-  alt: string;
-  title: string;
-  caption: string;
-};
 
 export function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -146,11 +140,7 @@ export function ScreenshotCarousel({ shots }: { shots: Shot[] }) {
     </div>
   );
 }
-interface FeatureCardProps{
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
+
 export function FeatureCard({
   title,
   description,
@@ -173,21 +163,6 @@ export function Pill({ children }: { children: React.ReactNode }) {
       {children}
     </span>
   );
-}
-interface TopcardsProps{
-  coreIdea:string,
-  greatFor:string,
-  outcome:string
-}
-interface ProjectPageProps {
-  shots:Shot[]
-  techTags:string[]
-  projectTitle:string;
-  mainDescription:string;
-  topCard:TopcardsProps;
-  features:FeatureCardProps[];
-  projectLinks:ProjectLink[];
-
 }
 
 const maindescript="A visual way to map how you learn: track questions you’re trying to answer, attach the resources you used, and grow a dependency graph of ideas so you can see what to study next."

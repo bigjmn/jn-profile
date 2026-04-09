@@ -1,4 +1,4 @@
-interface WorkProjectProps {
+export interface WorkProjectProps {
   title: string;
   company: string;
   technologies: string[];

@@ -1,3 +1,16 @@
+interface Shot {
+  src: string;
+  alt: string;
+  title: string;
+  caption: string;
+}
+
+interface FeatureCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
 interface Preview {
     title: string;
     slug: string;
