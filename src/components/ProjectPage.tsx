@@ -456,9 +456,9 @@ export function ProjectPage({shots,techTags,projectTitle,mainDescription, topCar
         {/* Screenshot grid (extra, desktop-friendly) */}
         <section className="mt-12">
           <h2 className="text-xl font-semibold sm:text-2xl">Screenshots</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
+          {/* <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
             A few UI moments from the app—node creation, tagging, and graph navigation.
-          </p>
+          </p> */}
 
           <div className="mt-5 columns-1 sm:columns-2 lg:columns-3 gap-4">
             {shots.map((s, idx) => (

@@ -1,7 +1,7 @@
 import { ProjectPage } from '@/components/ProjectPage';
 import { BsDiagram3, BsTrophy, BsNodePlus, BsArrowRepeat, BsBook } from "react-icons/bs";
 
-const maindescript = "ColorFill is a graph theory puzzle game where strategy meets cascading color mechanics. Click a node to paint it—but here's the twist: any neighboring nodes of the same color reset to white. Your goal is to fill the entire graph with a single color in as few moves as possible. It's part logic puzzle, part strategic planning, with a dash of graph theory elegance."
+const maindescript = "ColorFill is a graph theory puzzle game where strategy meets cascading color mechanics. Click a node to paint it—but here's the twist: any neighboring nodes of the same color reset to white. Your goal is to fill the entire graph in as few moves as possible. It's part logic puzzle, part strategic planning, with a dash of graph theory elegance."
 
 const testProps: ProjectPageProps = {
   shots: [
@@ -10,7 +10,7 @@ const testProps: ProjectPageProps = {
         alt: "A starting board for a ColorFill puzzle",
         title: "A starting board for a ColorFill puzzle",
         caption:
-          "The wheel cycles through each color in turn. Clicking a node colors that node.",
+          "The wheel cycles through each color in turn. Clicking an empty node colors that node.",
       }
   ],
 
@@ -19,8 +19,8 @@ const testProps: ProjectPageProps = {
   mainDescription: maindescript,
   topCard: {
     coreIdea: "Strategic graph coloring with cascading resets",
-    greatFor: "puzzle enthusiasts and graph theory curious minds",
-    outcome: "Think ahead, minimize moves, and master the color flood"
+    greatFor: "Puzzle enthusiasts and graph theory curious minds",
+    outcome: "Deployed web app, potential mobile app"
   },
   features: [
     {
@@ -35,7 +35,7 @@ const testProps: ProjectPageProps = {
     },
     {
       title: "Interactive graph visualization",
-      description: "Click nodes to color them, see connections light up, and watch the graph transform in real-time as you work toward a single-color solution.",
+      description: "Click nodes to color them, see connections light up, and watch the graph transform in real-time as you work toward a solution.",
       icon: <BsNodePlus />
     },
     {
