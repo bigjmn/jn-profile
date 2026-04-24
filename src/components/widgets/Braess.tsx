@@ -102,7 +102,7 @@ export default function BraessParadoxExplorer() {
   const pathSB = useRef<SVGPathElement>(null);
   const pathBE = useRef<SVGPathElement>(null);
   const pathAB = useRef<SVGPathElement>(null);
-  const pathRefs: Record<EdgeKey, React.RefObject<SVGPathElement>> = {
+  const pathRefs: Record<EdgeKey, React.RefObject<SVGPathElement | null>> = {
     SA: pathSA,
     AE: pathAE,
     SB: pathSB,
