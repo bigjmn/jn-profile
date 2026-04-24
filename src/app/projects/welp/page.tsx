@@ -78,7 +78,9 @@ const testProps:ProjectPageProps = {
     }
   ],
   projectLinks: [
+    {linkType: "app store", linkUrl:"https://apps.apple.com/us/app/welp/id6755419520"},
     {linkType:'github',linkUrl:"https://github.com/bigjmn/welp-app"}
+    
   ]
 
 }

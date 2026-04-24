@@ -1,0 +1,21 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link "Jesse Nicholas" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e6]:
+          - button "Toggle dark mode" [ref=e7] [cursor=pointer]:
+            - img [ref=e8]
+          - button "Toggle menu" [ref=e10] [cursor=pointer]:
+            - img [ref=e11]
+  - generic [ref=e14]:
+    - heading "Braess's Paradox" [level=2] [ref=e15]
+    - generic [ref=e16]:
+      - text: "An interactive visualization of Braess’s Paradox: the counterintuitive result that adding a new road to a network can make everyone’s commute longer. Drag the slider to change traffic volume and toggle the shortcut on and off to see exactly where the paradox kicks in. Read more in"
+      - link "my writeup" [ref=e17] [cursor=pointer]:
+        - /url: /math/fixing-traffic
+      - text: .
+  - button "Open Next.js Dev Tools" [ref=e25] [cursor=pointer]:
+    - img [ref=e26]
+  - alert [ref=e29]

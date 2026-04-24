@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link "Jesse Nicholas" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e6]:
+          - link "Projects" [ref=e7] [cursor=pointer]:
+            - /url: /#projects
+          - link "Widgets" [ref=e8] [cursor=pointer]:
+            - /url: /#widgets
+          - link "Skills" [ref=e9] [cursor=pointer]:
+            - /url: /#skills
+          - link "Math" [ref=e10] [cursor=pointer]:
+            - /url: /#math
+          - link "Contact" [ref=e11] [cursor=pointer]:
+            - /url: /#contact
+  - generic [ref=e13]:
+    - heading "Langton's Ant" [level=2] [ref=e14]
+    - generic [ref=e15]: ant blurb here

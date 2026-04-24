@@ -86,6 +86,7 @@ const testProps:ProjectPageProps = {
     }
   ],
   projectLinks: [
+    {linkType: "website", linkUrl: "https://shockanddraw.xyz/"},
     {linkType:'github', linkUrl:"https://github.com/bigjmn/shock-and-draw"}
   ]
 

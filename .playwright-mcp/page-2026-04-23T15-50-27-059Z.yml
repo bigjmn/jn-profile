@@ -1,0 +1,24 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Tetris Buddies" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - text: 
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e8]:
+        - link "Leaderboard" [ref=e9] [cursor=pointer]:
+          - /url: /leaderboard
+      - listitem [ref=e10]:
+        - link "Da Rules" [ref=e11] [cursor=pointer]:
+          - /url: /darules
+      - listitem [ref=e12]:
+        - link "About" [ref=e13] [cursor=pointer]:
+          - /url: /about
+  - heading "Tetris Buddies" [level=1] [ref=e16]
+  - heading "A co-op Tetris game of asymmentrical information." [level=2] [ref=e18]
+  - heading "Not currently spelled with a Z." [level=2] [ref=e20]
+  - generic [ref=e21]:
+    - button "Create a Game" [ref=e23] [cursor=pointer]
+    - button "Join a Game" [ref=e25] [cursor=pointer]

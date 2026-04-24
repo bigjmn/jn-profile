@@ -95,6 +95,7 @@ const testProps:ProjectPageProps = {
     }
   ],
   projectLinks: [
+    {linkType: "app store", linkUrl: "https://apps.apple.com/us/app/trio-jam/id1623691094"},
     {linkType:'website', linkUrl: "triojam.com"},
     {linkType:'github', linkUrl:"https://github.com/bigjmn/tjam-v2"}
   ]

@@ -39,7 +39,11 @@ Yes he can! In fact, an angel of power 2 or greater can escape the devil indefin
 
 I've implemented the game below, as well as some of the angel variants Conway examines in his paper.
 `
+
+
 const epicycleDescriber = `Any curve can be decomposed into a series of periodic functions. I’ve implemented the fast fourier transform (Cooley-Turkey algorithm) so you can try it yourself!`
+
+const braessDescriber = `An interactive visualization of Braess’s Paradox: the counterintuitive result that adding a new road to a network can make everyone’s commute longer. Drag the slider to change traffic volume and toggle the shortcut on and off to see exactly where the paradox kicks in. Read more in <a href="/math/fixing-traffic">my writeup</a>.`
 export const widgets: WidgetDefinition[] = [
   {
     title: 'Epicycles',
@@ -73,6 +77,20 @@ export const widgets: WidgetDefinition[] = [
       angelDescriber,
     load: () => import('@/components/widgets/AngelProblem'),
   },
+  {
+    title: "Braess's Paradox",
+    slug: 'braess-paradox',
+    imageSrc: '/gifs/braess-network-toggle.gif',
+    blurb: braessDescriber,
+    load: () => import('@/components/widgets/Braess')
+  },
+  {
+    title: "Langton's Ant",
+    slug: "langton-ant",
+    imageSrc:'/gifs/langtons_ant.gif',
+    blurb: "Langton's Ant is a two-dimensional cellular automaton with a beautifully simple rule: the ant turns right on a white square and left on a black one, flipping the color behind it as it goes. From these two rules alone, something remarkable emerges — early chaos that eventually collapses into an infinitely repeating diagonal \"highway,\" no matter what starting configuration you give it. Nobody has proved why this happens. It just does.\n\nI have a lot more to say about this one — the multi-ant dynamics, the topology experiments, and some surprising connections to other areas of math — so a longer writeup is coming soon.",
+    load: () => import('@/components/widgets/LangtonsAnt')
+  }
 ];
 
 export const widgetsBySlug = widgets.reduce<Record<string, WidgetDefinition>>((acc, widget) => {

@@ -455,7 +455,7 @@ const EpicycleVisualizer: React.FC = () => {
           <canvas ref={epiCanvasRef} id="epicycleCanvas" width={400} height={400} />
         </div>
         <div className="controls">
-          <button type="button" onClick={handleClearClick}>
+          <button type="button" onClick={handleClearClick} className="styled-btn">
             Clear
           </button>
           <span className="hint">Draw with your mouse or finger, release to animate.</span>

@@ -125,7 +125,7 @@ canvas {
   max-width: 320px;
 }
 
-button {
+.styled-btn {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
   background: #0078d4;
@@ -136,12 +136,12 @@ button {
   transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
 }
 
-button:hover {
+.styled-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 18px rgba(0, 120, 212, 0.35);
 }
 
-button:active {
+.styled-btn:active {
   transform: translateY(0);
   box-shadow: none;
 }
