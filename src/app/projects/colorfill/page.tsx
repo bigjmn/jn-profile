@@ -55,6 +55,7 @@ const testProps: ProjectPageProps = {
     }
   ],
   projectLinks: [
+    {linkType: "website", linkUrl: "https://graph-filler.vercel.app/"},
     {linkType: "github", linkUrl: "https://github.com/bigjmn/colorfill-v2"}
   ]
 }
